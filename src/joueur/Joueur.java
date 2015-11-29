@@ -3,8 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package projet;
+package joueur;
 import java.util.Scanner;
+import partie.Champ;
+import carte.Ingredient;
 
 public abstract class Joueur {
     public String nomJoueur;

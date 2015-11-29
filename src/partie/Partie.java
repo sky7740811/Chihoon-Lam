@@ -1,8 +1,12 @@
 
-package projet;
+package partie;
 import java.util.Arrays;
 import java.util.Scanner;
-import projet.strategy.Debutant;
+import carte.Ingredient;
+import joueur.Joueur;
+import joueur.JoueurReel;
+import joueur.JoueurVirtuel;
+import strategy.Debutant;
        
 
 public class Partie {

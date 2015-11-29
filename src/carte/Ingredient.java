@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package projet;
+package carte;
 
 public class Ingredient extends Carte {
     public int valeursGeant[] = new int[4];

@@ -3,7 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package projet;
+package joueur;
+
+import partie.Champ;
+import carte.Ingredient;
 
 /**
  *

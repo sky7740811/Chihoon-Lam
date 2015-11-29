@@ -3,17 +3,19 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package projet;
+package strategy;
 
 /**
  *
  * @author Chihoon
  */
-public class Carte {
-  
+public interface Strategy {
+    public int choisirCarte(int id);
     
-    public Carte(){
-        
-    }
+    public int choisirAction();
     
+    public int choisirCible(int nbjoueur, int id); //id = pour identifier quel joueur virtuel
+    
+    
+    //test2
 }

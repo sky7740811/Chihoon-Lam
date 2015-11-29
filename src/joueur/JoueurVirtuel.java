@@ -3,9 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package projet;
+package joueur;
 
-import projet.strategy.Strategy;
+import partie.Champ;
+import carte.Ingredient;
+import strategy.Strategy;
 
 
 public class JoueurVirtuel extends Joueur implements Strategy{
