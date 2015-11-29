@@ -20,8 +20,8 @@ public abstract class Joueur {
         this.idJoueur = id;
     }
     
-    public void setNomJoueur(){
-        
+    public void setNomJoueur(String nom){
+        this.nomJoueur = nom;
     }
     
     public String getNomJoueur(){
