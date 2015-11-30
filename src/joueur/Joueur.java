@@ -4,9 +4,12 @@
  * and open the template in the editor.
  */
 package joueur;
+import carte.Carte;
 import java.util.Scanner;
 import partie.Champ;
 import carte.Ingredient;
+import java.util.ArrayList;
+import java.util.LinkedList;
 
 public abstract class Joueur {
     public String nomJoueur;
@@ -34,5 +37,9 @@ public abstract class Joueur {
     
     public void jouerCarte(Ingredient carteIngredient[], Champ champ[], int nbjoueur,int i){
         
+    }
+
+    public void jouerCarte(ArrayList<Ingredient> carteIngredient, Champ[] champ, int nbJoueur, int i) {
+       
     }
 }

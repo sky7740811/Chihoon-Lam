@@ -7,7 +7,7 @@ package joueur;
 
 import partie.Champ;
 import carte.Ingredient;
-
+import java.util.ArrayList;
 /**
  *
  * @author Chihoon
@@ -18,38 +18,38 @@ public class JoueurReel extends Joueur{
         super(nom,id);
     }
     
-    public void jouerCarte(Ingredient carteIngredient[], Champ champ[], int nbjoueur,int i){ //i : saison
+    public void jouerCarte(ArrayList<Ingredient> carteIngredient, Champ champ[], int nbjoueur,int i){ //i : saison
 
       int choix = 0;
       boolean choixnull = true; //false si le joueur choisit une carte valide.
       do{
             System.out.println("\nQuelle carte souhaitez-vous de jouer?");
             for(int k=0;k<4;k++){
-                if(carteIngredient[k]!=null){
-                    System.out.print("Carte "+ (k+1) + " ");
+                if(carteIngredient.get(k)!=null){
+                   System.out.print("Carte "+ (k+1) + " ");
                 }
             }
             System.out.print("\n> ");
             choix = input.nextInt();
             choix -= 1;
-            if(carteIngredient[choix]!=null){ //Si la carte choisie existe dans la main
+            if(carteIngredient.get(choix)!=null){ //Si la carte choisie existe dans la main
                 choixnull = false;
                 //choisir l'action
                 System.out.println("\nCarte Choisie: ");
-                carteIngredient[choix].afficher();
+                carteIngredient.get(choix).afficher();
                 System.out.print("\nQuelle action souhaitez-vous de jouer? 1: Geant, 2: Engrais, 3: Farfadets\n> ");
                 int choix2 = input.nextInt();
                 do{    
                     switch(choix2){
                         case 1:{ //Geant
-                            System.out.println("\nVous avez récupéré " + carteIngredient[choix].valeursGeant[i]+ " graine(s)\n");//Carte choisie au tour j au saison i
-                            champ[0].ajouter("graine", carteIngredient[choix].valeursGeant[i]);
+                            System.out.println("\nVous avez récupéré " + carteIngredient.get(choix).valeursGeant[i]+ " graine(s)\n");//Carte choisie au tour j au saison i
+                            champ[0].ajouter("graine", carteIngredient.get(choix).valeursGeant[i]);
                             break;
                         }
                         case 2:{ //Engrais
                             int menhirApousser = 0;
-                            if(carteIngredient[choix].valeursEngrais[i]<=champ[0].nbGraine){
-                                menhirApousser = carteIngredient[choix].valeursEngrais[i];
+                            if(carteIngredient.get(choix).valeursEngrais[i]<=champ[0].nbGraine){
+                                menhirApousser = carteIngredient.get(choix).valeursEngrais[i];
                             }
                             else{
                                 menhirApousser = champ[0].nbGraine;
@@ -68,8 +68,8 @@ public class JoueurReel extends Joueur{
                             }
                             int graineAvoler = 0;
                             choix3-=1; //car la table joueur commence par joueur[0]
-                            if(carteIngredient[choix].valeursFarfadets[i]<=champ[choix3].nbGraine){ //champ[choix3].nbGraine : Nombre graines de l'adversaire ciblé
-                                graineAvoler=carteIngredient[choix].valeursFarfadets[i];
+                            if(carteIngredient.get(choix).valeursFarfadets[i]<=champ[choix3].nbGraine){ //champ[choix3].nbGraine : Nombre graines de l'adversaire ciblé
+                                graineAvoler=carteIngredient.get(choix).valeursFarfadets[i];
                             }
                             else{
                                 graineAvoler=champ[choix3].nbGraine;
@@ -86,7 +86,7 @@ public class JoueurReel extends Joueur{
                         }
                     }
                 }while(choix2<1 || choix2>3);
-                carteIngredient[choix]=null;
+                carteIngredient.set(choix,null);
             }
             else{
                 System.out.println("\nVeuillez choisir une carte valide");

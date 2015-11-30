@@ -8,6 +8,7 @@ package joueur;
 import partie.Champ;
 import carte.Ingredient;
 import strategy.Strategy;
+import java.util.ArrayList;
 
 
 public class JoueurVirtuel extends Joueur implements Strategy{
@@ -18,27 +19,27 @@ public class JoueurVirtuel extends Joueur implements Strategy{
         this.strategy = strategy;
     }
     
-    public void jouerCarte(Ingredient carteIngredient[], Champ champ[], int nbjoueur,int i){ //i : saison
+    public void jouerCarte(ArrayList<Ingredient> carteIngredient, Champ champ[], int nbjoueur,int i){ //i : saison
 
         int choix = 0;
         do{ //refaire tant que le joueur choisisse une carte valide
         choix=strategy.choisirCarte(this.idJoueur);
-        }while(carteIngredient[choix]==null);
+        }while(carteIngredient.get(choix)==null);
         
         System.out.println("\nCarte Choisie: ");
-        carteIngredient[choix].afficher();
+        carteIngredient.get(choix).afficher();
 
         int choix2 = strategy.choisirAction();
             switch(choix2){
                 case 1:{ //Geant
-                    System.out.println("\n"+this.getNomJoueur()+" a récupéré " + carteIngredient[choix].valeursGeant[i]+ " graine(s)\n");//Carte choisie au tour j au saison i
-                    champ[this.idJoueur-1].ajouter("graine", carteIngredient[choix].valeursGeant[i]);
+                    System.out.println("\n"+this.getNomJoueur()+" a récupéré " + carteIngredient.get(choix).valeursGeant[i]+ " graine(s)\n");//Carte choisie au tour j au saison i
+                    champ[this.idJoueur-1].ajouter("graine", carteIngredient.get(choix).valeursGeant[i]);
                     break;
                 }
                 case 2:{ //Engrais
                     int menhirApousser = 0;
-                    if(carteIngredient[choix].valeursEngrais[i]<=champ[this.idJoueur-1].nbGraine){
-                        menhirApousser = carteIngredient[choix].valeursEngrais[i];
+                    if(carteIngredient.get(choix).valeursEngrais[i]<=champ[this.idJoueur-1].nbGraine){
+                        menhirApousser = carteIngredient.get(choix).valeursEngrais[i];
                     }
                     else{
                         menhirApousser = champ[this.idJoueur-1].nbGraine;
@@ -48,12 +49,12 @@ public class JoueurVirtuel extends Joueur implements Strategy{
                         champ[this.idJoueur-1].enlever("graine", menhirApousser);
                     break;
                 }
-                case 3:{//farfadets
+                case 3:{//Farfadets
                     int choix3 = strategy.choisirCible(nbjoueur, this.idJoueur);
                     int graineAvoler = 0;
                     choix3-=1; //car la table joueur commence par joueur[0]
-                    if(carteIngredient[choix].valeursFarfadets[i]<=champ[choix3].nbGraine){ //champ[choix3].nbGraine : Nombre graines de l'adversaire ciblé
-                        graineAvoler=carteIngredient[choix].valeursFarfadets[i];
+                    if(carteIngredient.get(choix).valeursFarfadets[i]<=champ[choix3].nbGraine){ //champ[choix3].nbGraine : Nombre graines de l'adversaire ciblé
+                        graineAvoler=carteIngredient.get(choix).valeursFarfadets[i];
                     }
                     else{
                         graineAvoler=champ[choix3].nbGraine;
@@ -70,7 +71,7 @@ public class JoueurVirtuel extends Joueur implements Strategy{
                 }
 
             }
-            carteIngredient[choix]=null;
+            carteIngredient.set(choix,null);
           }
 
     

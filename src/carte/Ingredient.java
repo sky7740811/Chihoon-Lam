@@ -5,6 +5,7 @@
  */
 package carte;
 
+
 public class Ingredient extends Carte {
     public int valeursGeant[] = new int[4];
     public int valeursEngrais[] = new int[4];
@@ -13,13 +14,13 @@ public class Ingredient extends Carte {
     
     
     public Ingredient(){
-        super();
         for(int i=0;i<4;i++){
-            valeursGeant[i]=(int)(Math.random()*(5-0))+0;
-            valeursEngrais[i]=(int)(Math.random()*(5-0))+0;
-            valeursFarfadets[i]=(int)(Math.random()*(5-0))+0;
+            valeursGeant[i]=(int)(Math.random()*(5))+0;
+            valeursEngrais[i]=(int)(Math.random()*(5))+0;
+            valeursFarfadets[i]=(int)(Math.random()*(5))+0;
         }
     }
+    
     
     public void afficher(){
         System.out.print("Geant     :");

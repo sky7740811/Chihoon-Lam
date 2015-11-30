@@ -1,5 +1,6 @@
 
 package partie;
+import carte.Carte;
 import java.util.Arrays;
 import java.util.Scanner;
 import carte.Ingredient;
@@ -8,6 +9,13 @@ import joueur.JoueurReel;
 import joueur.JoueurVirtuel;
 import strategy.Debutant;
 import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.Collections;
+import java.util.LinkedList;
+import carte.Ingredient;
+import carte.Alliee;
+import carte.TaupeGeante;
+import carte.ChienDeGarde;
        
 
 public class Partie {
@@ -19,7 +27,8 @@ public class Partie {
     public int manche;
     public int tour;
     public static int joueurActuel;
-    //public static Partie p = new Partie();
+    public static ArrayList<Ingredient> carteIngredient = new ArrayList<Ingredient>();
+    public static ArrayList<Alliee> carteAlliee = new ArrayList<Alliee>();
     public Scanner input = new Scanner(System.in);
     
     /**
@@ -62,14 +71,34 @@ public class Partie {
         }
             
     }
-    /*
-    public static void main(String[] args) {
-     p.lancerPartie();
-        
-        
-    }*/
-
+    /*-----------------------Creation des cartes-------------------------------------*/
     
+     /**
+     * On crée 4 * nbjoueurs cartes ingrédients .
+     */
+    public void creerDeck(){
+        Ingredient ingredient;
+        Alliee alliee;
+        int nbcartesIngredient = this.getNbJoueur()*4;
+        for(int i = 0; i<nbcartesIngredient; i++){
+            ingredient = new Ingredient();
+            carteIngredient.add(ingredient);
+        }
+        /**
+         * pour partie avancée, on créera 6 cartes alliées dont 3 geants 3 chiens de garde.
+         */
+        if(modeJeu==2){ 
+            for(int i = 0; i<3; i++){
+                alliee = new TaupeGeante();
+                carteAlliee.add(alliee);
+            }
+            for(int i = 0; i<3; i++){
+                alliee = new ChienDeGarde();
+                carteAlliee.add(alliee);
+            }
+        } 
+    }
+
     public int getModeJeu(){
         return modeJeu;
     }
@@ -84,26 +113,10 @@ public class Partie {
         return niveauJeu;
     }
     
-  /*  public void distribuerCartes(){
-        if(this.getModeJeu()==1){
-            int nbcartes = this.getNbJoueur()*4;
-            Ingredient carteIngredient[] = new Ingredient[nbcartes];
-            for(int i=0;i<nbcartes;i++){ //joueur1 : carte[0]~carte[3] , joueur2: carte[4]~carte[7] ...
-                carteIngredient[i] = new Ingredient();            
-            }
-        }
-        else{
-        }
-    }*/
     
     public void lancerPartie(){
   
-        //this.distribuerCartes();
-       
- 
-           
-        
-        //***********Partie Rapide******************************
+        /*-----------------------Partie Rapide----------------------------------*/
         if(this.getModeJeu()==1){
             //2 cailloux pour chaque joueur
             Champ champ[] = new Champ[this.getNbJoueur()];
@@ -113,11 +126,13 @@ public class Partie {
             }
             
             //Creation des cartes
+           this.creerDeck();
+            /*
             int nbcartes = this.getNbJoueur()*4;
             Ingredient carteIngredient[] = new Ingredient[nbcartes];
             for(int i=0;i<nbcartes;i++){ //joueur1 : carte[0]~carte[3] , joueur2: carte[4]~carte[7] ...
                 carteIngredient[i] = new Ingredient();            
-            }
+            }*/
             
             //Deroulement de la partie
             int i = 0; //compteur pour saison
@@ -137,9 +152,9 @@ public class Partie {
                             
                         System.out.println("\nVotre main: ");
                         for(int k=0;k<4;k++){
-                            if(carteIngredient[k]!=null){
+                            if(carteIngredient.get(k)!=null){
                                 System.out.println("Carte "+ (k+1));
-                                carteIngredient[k].afficher();
+                                carteIngredient.get(k).afficher();
                             }
                         }
                         collectionJoueurs.get(0).jouerCarte(carteIngredient,champ,this.getNbJoueur(),i);

@@ -9,6 +9,18 @@ package carte;
  *
  * @author Chihoon
  */
-public class Alliee {
-    
+public class Alliee extends Carte {
+    public static int valeurs[] = new int[4];
+  
+     public Alliee(){
+        for(int i=0;i<4;i++){
+            valeurs[i]=(int)(Math.random()*(4))+0;
+        }
+    }
+     
+     public void afficher(){
+        for(int i=0;i<4;i++){
+            System.out.print(" "+ valeurs[i]);
+        }
+     }
 }
