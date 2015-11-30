@@ -19,7 +19,7 @@ public class JoueurVirtuel extends Joueur implements Strategy{
         this.strategy = strategy;
     }
     
-    public void jouerCarte(ArrayList<Ingredient> carteIngredient, Champ champ[], int nbjoueur,int i){ //i : saison
+    public void jouerCarte(ArrayList<Ingredient> carteIngredient, ArrayList<Champ> champ, int nbjoueur,int i){ //i : saison
 
         int choix = 0;
         do{ //refaire tant que le joueur choisisse une carte valide
@@ -30,49 +30,43 @@ public class JoueurVirtuel extends Joueur implements Strategy{
         carteIngredient.get(choix).afficher();
 
         int choix2 = strategy.choisirAction();
-            switch(choix2){
-                case 1:{ //Geant
-                    System.out.println("\n"+this.getNomJoueur()+" a récupéré " + carteIngredient.get(choix).valeursGeant[i]+ " graine(s)\n");//Carte choisie au tour j au saison i
-                    champ[this.idJoueur-1].ajouter("graine", carteIngredient.get(choix).valeursGeant[i]);
-                    break;
+            if(choix2==1){
+                System.out.println("\n"+this.getNomJoueur()+" a récupéré " + carteIngredient.get(choix).valeursGeant[i]+ " graine(s)\n");//Carte choisie au tour j au saison i
+                champ.get(this.idJoueur-1).ajouter("graine", carteIngredient.get(choix).valeursGeant[i]);
+            }
+            else if(choix2==2){
+                int menhirApousser = 0;
+                if(carteIngredient.get(choix).valeursEngrais[i]<=champ.get(this.idJoueur-1).nbGraine){
+                    menhirApousser = carteIngredient.get(choix).valeursEngrais[i];
                 }
-                case 2:{ //Engrais
-                    int menhirApousser = 0;
-                    if(carteIngredient.get(choix).valeursEngrais[i]<=champ[this.idJoueur-1].nbGraine){
-                        menhirApousser = carteIngredient.get(choix).valeursEngrais[i];
-                    }
-                    else{
-                        menhirApousser = champ[this.idJoueur-1].nbGraine;
-                    }
-                        System.out.println("\n"+this.getNomJoueur()+" a poussé " + menhirApousser + " menhir(s)\n");//Carte choisie au tour j au saison i
-                        champ[this.idJoueur-1].ajouter("menhir", menhirApousser);
-                        champ[this.idJoueur-1].enlever("graine", menhirApousser);
-                    break;
+                else{
+                    menhirApousser = champ.get(this.idJoueur-1).nbGraine;
                 }
-                case 3:{//Farfadets
-                    int choix3 = strategy.choisirCible(nbjoueur, this.idJoueur);
-                    int graineAvoler = 0;
-                    choix3-=1; //car la table joueur commence par joueur[0]
-                    if(carteIngredient.get(choix).valeursFarfadets[i]<=champ[choix3].nbGraine){ //champ[choix3].nbGraine : Nombre graines de l'adversaire ciblé
-                        graineAvoler=carteIngredient.get(choix).valeursFarfadets[i];
-                    }
-                    else{
-                        graineAvoler=champ[choix3].nbGraine;
-                    }
-                    if(choix3==0){
-                        System.out.println("\n"+this.getNomJoueur()+" a volé " + graineAvoler + " graine(s) de votre!\n");  
-                    }
-                    else{
-                        System.out.println("\n"+this.getNomJoueur()+" a volé " + graineAvoler + " graine(s) du Joueur " + (choix3 + 1) + "\n");//Carte choisie au tour j au saison i
-                    }
-                    champ[this.idJoueur-1].ajouter("graine", graineAvoler);
-                    champ[choix3].enlever("graine", graineAvoler);
-                    break;
+                    System.out.println("\n"+this.getNomJoueur()+" a poussé " + menhirApousser + " menhir(s)\n");//Carte choisie au tour j au saison i
+                    champ.get(this.idJoueur-1).ajouter("menhir", menhirApousser);
+                    champ.get(this.idJoueur-1).enlever("graine", menhirApousser);
+            }
+            else{
+                int choix3 = strategy.choisirCible(nbjoueur, this.idJoueur);
+                int graineAvoler = 0;
+                choix3-=1; //car la table joueur commence par joueur[0]
+                if(carteIngredient.get(choix).valeursFarfadets[i]<=champ.get(choix3).nbGraine){ //champ[choix3].nbGraine : Nombre graines de l'adversaire ciblé
+                    graineAvoler=carteIngredient.get(choix).valeursFarfadets[i];
                 }
-
+                else{
+                    graineAvoler=champ.get(choix3).nbGraine;
+                }
+                if(choix3==0){
+                    System.out.println("\n"+this.getNomJoueur()+" a volé " + graineAvoler + " graine(s) de votre!\n");  
+                }
+                else{
+                    System.out.println("\n"+this.getNomJoueur()+" a volé " + graineAvoler + " graine(s) du Joueur " + (choix3 + 1) + "\n");//Carte choisie au tour j au saison i
+                }
+                champ.get(this.idJoueur-1).ajouter("graine", graineAvoler);
+                champ.get(choix3).enlever("graine", graineAvoler);
             }
             carteIngredient.set(choix,null);
-          }
+        }
 
     
     public int choisirCarte(int id) {

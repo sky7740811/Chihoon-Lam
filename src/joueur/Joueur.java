@@ -9,10 +9,9 @@ import java.util.Scanner;
 import partie.Champ;
 import carte.Ingredient;
 import java.util.ArrayList;
-import java.util.LinkedList;
 
 public abstract class Joueur {
-    public String nomJoueur;
+    private String nomJoueur;
     public int pointsTotal;
     public int idJoueur;
     public String ChoixDepart;
@@ -39,7 +38,7 @@ public abstract class Joueur {
         
     }
 
-    public void jouerCarte(ArrayList<Ingredient> carteIngredient, Champ[] champ, int nbJoueur, int i) {
+    public void jouerCarte(ArrayList<Ingredient> carteIngredient, ArrayList<Champ> champ, int nbJoueur, int i) {
        
     }
 }

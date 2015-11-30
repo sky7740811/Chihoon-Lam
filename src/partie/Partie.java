@@ -26,10 +26,21 @@ public class Partie {
     public String saison[] = {"Printemps","Ete","Automne","Hiver"};
     public int manche;
     public int tour;
-    public static int joueurActuel;
+    
+  
     public static ArrayList<Ingredient> carteIngredient = new ArrayList<Ingredient>();
     public static ArrayList<Alliee> carteAlliee = new ArrayList<Alliee>();
+    public static ArrayList<Champ> listechamp = new ArrayList<Champ>();
+
+    /**
+     *
+     */
+    public static ArrayList<Integer> ordreJoueur = new ArrayList<>();
+    public static ArrayList<Boolean> aDejaJouerPremier = new ArrayList<>();//pour ne pas qu'un joueur commence 2 ou plusieurs fois en premier au debut d'une manche
+   
+    
     public Scanner input = new Scanner(System.in);
+    
     
     /**
     * Liste des joueurs
@@ -60,6 +71,7 @@ public class Partie {
         Joueur joueur;
         
         
+        
         for(int i = 0; i <nbJoueur; i++){
             if(i == 0){
                 joueur = new JoueurReel(nomJoueurs[i],1);
@@ -68,6 +80,8 @@ public class Partie {
                 joueur = new JoueurVirtuel(nomJoueurs[i], (i+1), new Debutant());
             }                
             collectionJoueurs.add(joueur);
+            ordreJoueur.add(i);
+            aDejaJouerPremier.add(false);
         }
             
     }
@@ -113,87 +127,113 @@ public class Partie {
         return niveauJeu;
     }
     
+    public void debutManche(){
+        
+        Collections.shuffle(ordreJoueur);//pour chaque debut de manche on melange l'ordre des joueurs
+        if(aDejaJouerPremier.get(ordreJoueur.get(0))){//verification si le joueur qui commence a deja jouer en premier
+            debutManche();
+        }
+        else{
+            aDejaJouerPremier.set(ordreJoueur.get(0),true);
+        }
+        Champ champ;
+        for(int i=0;i<this.getNbJoueur();i++){
+            champ = new Champ();
+            listechamp.add(champ);
+        }
+        if(this.getModeJeu()==1){
+            //2 cailloux pour chaque joueur
+            
+            for(int i=0;i<this.getNbJoueur();i++){
+                listechamp.get(i).ajouter("graine", 2);
+            }
+        }
+        else{
+        }
+        deroulementManche();
+    }
     
+    public void deroulementManche(){
+        for(int j=0;j<ordreJoueur.size();j++){
+            System.out.println("Derp "+ordreJoueur.get(j));
+        }
+               
+        int isaison = 0; //compteur pour saison
+        while(isaison<=3){
+        System.out.println("\nSaison : " +saison[isaison]);
+            for(int j=0;j<ordreJoueur.size();j++){
+               System.out.print("\nTour : " + collectionJoueurs.get(ordreJoueur.get(j)).getNomJoueur() + "\n\n");
+               
+
+               //*******************Tour du Joueur reel********************************
+               if(ordreJoueur.get(j)==0){ 
+                   //Etat des champs de tous les joueurs
+                    for(int k=0;k<this.getNbJoueur();k++){
+                    System.out.println("\n"+collectionJoueurs.get(k).getNomJoueur()+" : ");
+                    listechamp.get(k).afficher();
+                    }
+
+                    System.out.println("\nVotre main: ");
+                    for(int k=0;k<4;k++){
+                        if(carteIngredient.get(k)!=null){
+                            System.out.println("Carte "+ (k+1));
+                            carteIngredient.get(k).afficher();
+                        }
+                    }
+                    collectionJoueurs.get(0).jouerCarte(carteIngredient,listechamp,this.getNbJoueur(),isaison);
+                }
+               //****************************Tour des joueurs virtuels**********************************
+                else{
+                   collectionJoueurs.get(ordreJoueur.get(j)).jouerCarte(carteIngredient,listechamp,this.getNbJoueur(),isaison);
+                }   
+            }//fin saison
+            isaison++;
+        }//fin partie
+        for(int k=0;k<this.getNbJoueur();k++){
+                    System.out.println("\n"+collectionJoueurs.get(k).getNomJoueur()+" : ");
+                    listechamp.get(k).afficher();
+        }
+    }
     public void lancerPartie(){
   
         /*-----------------------Partie Rapide----------------------------------*/
-        if(this.getModeJeu()==1){
-            //2 cailloux pour chaque joueur
-            Champ champ[] = new Champ[this.getNbJoueur()];
-            for(int i=0;i<this.getNbJoueur();i++){
-                champ[i] = new Champ();
-                champ[i].ajouter("graine", 2);
-            }
-            
-            //Creation des cartes
-           this.creerDeck();
-            /*
-            int nbcartes = this.getNbJoueur()*4;
-            Ingredient carteIngredient[] = new Ingredient[nbcartes];
-            for(int i=0;i<nbcartes;i++){ //joueur1 : carte[0]~carte[3] , joueur2: carte[4]~carte[7] ...
-                carteIngredient[i] = new Ingredient();            
-            }*/
-            
-            //Deroulement de la partie
-            int i = 0; //compteur pour saison
-            while(i<=3){
-            System.out.println("\nSaison : " +saison[i]);
-                int j = 0;  //compteur pour tour
-                while(j<this.getNbJoueur()){
-                   System.out.print("\nTour : " + collectionJoueurs.get(j).getNomJoueur() + "\n\n");
-                   
-                   //*******************Tour du Joueur reel********************************
-                   if(j==0){ 
-                       //Etat des champs de tous les joueurs
-                        for(int k=0;k<this.getNbJoueur();k++){
-                        System.out.println("\n"+collectionJoueurs.get(k).getNomJoueur()+" : ");
-                        champ[k].afficher();
-                        }
-                            
-                        System.out.println("\nVotre main: ");
-                        for(int k=0;k<4;k++){
-                            if(carteIngredient.get(k)!=null){
-                                System.out.println("Carte "+ (k+1));
-                                carteIngredient.get(k).afficher();
-                            }
-                        }
-                        collectionJoueurs.get(0).jouerCarte(carteIngredient,champ,this.getNbJoueur(),i);
-                    }
-                   //****************************Tour des joueurs virtuels**********************************
-                    else{
-                       collectionJoueurs.get(j).jouerCarte(carteIngredient,champ,this.getNbJoueur(),i);
-                    }
-                    j++;   
-                }//fin saison
-                i++;
-            }//fin partie
-            for(int k=0;k<this.getNbJoueur();k++){
-                        System.out.println("\n"+collectionJoueurs.get(k).getNomJoueur()+" : ");
-                        champ[k].afficher();
-            }
-            
+        //Creation des cartes
+        if(modeJeu==1){
+            manche=1;
+        }
+        else{
+            manche=this.getNbJoueur();
+        }
+        for(int i=0;i<manche;i++){
+        //Creation des cartes
+        this.creerDeck();
+        if(modeJeu==2){
+            System.out.println("Manche "+manche+": ");
+        }
+        this.debutManche();
+        }
+        
+    
            
-            System.out.println("\nLe vainqueur est "+collectionJoueurs.get(estGagnant(champ)).getNomJoueur()+ "!");
-        }
+        System.out.println("\nLe vainqueur est "+collectionJoueurs.get(estGagnant()).getNomJoueur()+ "!");
+        
         //**************Partie avancée**************************************
-        else{//partie avancee
-            
-        }
+      
     }
     
-    public int estGagnant(Champ[] champ){
+    public int estGagnant(){
         int max=0;
        // max : id joueur ayant le plus de points
-        for(int i=1; i<champ.length;i++){
-            if(champ[i].nbMenhir>champ[max].nbMenhir){
+        for(int i=1; i<this.getNbJoueur();i++){
+            if(listechamp.get(i).nbMenhir>listechamp.get(max).nbMenhir){
                 max=i;
             }
         } 
         //Maintenant on connait le max de nombre menhirs obtenus, on verifie si il y a autre joueurs ayant meme nombre de menhirs
-        for(int i=0;i<champ.length;i++){
+        for(int i=0;i<this.getNbJoueur();i++){
             if(i!=max){//pour ne pas comparer entre soi-meme
-                if(champ[i].nbMenhir==champ[max].nbMenhir){ //Si on trouve deux joueurs ayant meme nombre de menhirs, on compare leur nombre de graines
-                    if(champ[i].nbGraine>champ[max].nbGraine){
+                if(listechamp.get(i).nbMenhir==listechamp.get(max).nbMenhir){ //Si on trouve deux joueurs ayant meme nombre de menhirs, on compare leur nombre de graines
+                    if(listechamp.get(i).nbGraine>listechamp.get(max).nbGraine){
                         max=i;
                     }
                 }
