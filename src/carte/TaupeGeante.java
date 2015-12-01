@@ -4,12 +4,14 @@
  * and open the template in the editor.
  */
 package carte;
+import partie.Champ;
 
 /**
  *
  * @author Chihoon
  */
 public class TaupeGeante extends Alliee{
+    public int menhirDetruits;
     public TaupeGeante(){
         super();
     }
@@ -25,5 +27,29 @@ public class TaupeGeante extends Alliee{
     public String getNomCarte(){
         return "Taupe Géante";
     }
+     public int getType(){
+        return 1;
+    }
     
+    public void detruireMenhir(int valeur, Champ champ){
+        
+        
+        if(champ.nbMenhir<valeur){
+            menhirDetruits= champ.nbMenhir;
+        }
+        else if(champ.nbMenhir==0){
+            menhirDetruits= 0;
+        }
+        else{
+            menhirDetruits = valeur;
+        }
+        champ.nbMenhir-=valeur; 
+        if(champ.nbMenhir<0){
+            champ.nbMenhir=0;
+        }
+    }
+    
+    public int getMenhirDetruits(){
+        return menhirDetruits;
+    }
 }

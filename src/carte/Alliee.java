@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 package carte;
+import partie.Champ;
 
 /**
  *
@@ -36,5 +37,17 @@ public class Alliee extends Carte {
     
     public String getNomCarte(){
         return null;
+    }
+    
+    public int getType(){
+        return 0;
+    }
+    
+    public void detruireMenhir(int valeur, Champ champ){
+        
+    }
+    
+    public int getMenhirDetruits(){
+        return 0;
     }
 }

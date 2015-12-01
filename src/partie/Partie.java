@@ -229,23 +229,21 @@ public class Partie {
                             carteIngredient.get(k).afficher();
                         }
                     }
-                    if(this.getModeJeu()==1){
-                        collectionJoueurs.get(0).jouerCarte(carteIngredient,listechamp,this.getNbJoueur(),isaison,1,null);
-                    }
-                    else{
-                        if(collectionJoueurs.get(0).aPiocheAlliee){
+                    if(collectionJoueurs.get(0).aPiocheAlliee){//si le joueur a piocher une alliee
                         carteAlliee.get(0).afficher();
-                        }
                         collectionJoueurs.get(0).jouerCarte(carteIngredient,listechamp,this.getNbJoueur(),isaison,2,carteAlliee.get(0));
+                    }
+                    else{ //le joueur n'a pas piocher une alliee ou c'est une partie rapide
+                       collectionJoueurs.get(0).jouerCarte(carteIngredient,listechamp,this.getNbJoueur(),isaison,1,null); 
                     }
                 }
                //****************************Tour des joueurs virtuels**********************************
                 else{
-                    if(this.getModeJeu()==1){
-                        collectionJoueurs.get(ordreJoueur.get(j)).jouerCarte(carteIngredient,listechamp,this.getNbJoueur(),isaison,1,null);
-                    }
-                    else{
+                    if(collectionJoueurs.get(ordreJoueur.get(j)).aPiocheAlliee){//si le joueur a piocher une alliee
                         collectionJoueurs.get(ordreJoueur.get(j)).jouerCarte(carteIngredient,listechamp,this.getNbJoueur(),isaison,1,carteAlliee.get(ordreJoueur.get(j)));
+                    }
+                    else{ //le joueur n'a pas piocher une alliee ou c'est une partie rapide
+                        collectionJoueurs.get(ordreJoueur.get(j)).jouerCarte(carteIngredient,listechamp,this.getNbJoueur(),isaison,1,null);
                     }
                 }   
             }//fin saison

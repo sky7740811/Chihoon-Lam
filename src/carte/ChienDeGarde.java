@@ -25,4 +25,8 @@ public class ChienDeGarde extends Alliee{
     public String getNomCarte(){
         return "Chien de garde";
     }
+    
+    public int getType(){
+        return 2;
+    }
 }

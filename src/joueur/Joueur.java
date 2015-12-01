@@ -34,7 +34,7 @@ public abstract class Joueur {
     }
     
     public void setaPiocheAlliee(boolean bool){
-        aPiocheAlliee=true;
+        aPiocheAlliee=bool;
     }
     
     public void finirTour(){
