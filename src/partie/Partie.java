@@ -8,6 +8,7 @@ import joueur.Joueur;
 import joueur.JoueurReel;
 import joueur.JoueurVirtuel;
 import strategy.Debutant;
+import strategy.Strategy;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Collections;
@@ -16,6 +17,7 @@ import carte.Ingredient;
 import carte.Alliee;
 import carte.TaupeGeante;
 import carte.ChienDeGarde;
+import java.util.InputMismatchException;
        
 
 public class Partie {
@@ -26,6 +28,7 @@ public class Partie {
     public String saison[] = {"Printemps","Ete","Automne","Hiver"};
     public int manche;
     public int tour;
+    
     
   
     public static ArrayList<Ingredient> carteIngredient = new ArrayList<Ingredient>();
@@ -126,16 +129,25 @@ public class Partie {
     public int getNiveauJeu(){
         return niveauJeu;
     }
-    
+    /**
+     * Methode debut Manche permet de melanger l'ordre des tours des joueurs et faire le choix depart
+     */
     public void debutManche(){
         
-        Collections.shuffle(ordreJoueur);//pour chaque debut de manche on melange l'ordre des joueurs
-        if(aDejaJouerPremier.get(ordreJoueur.get(0))){//verification si le joueur qui commence a deja jouer en premier
-            debutManche();
+        Collections.shuffle(ordreJoueur);
+        Collections.shuffle(carteIngredient);//et aussi les cartes ingredients
+        for(int i=0;i<carteIngredient.size();i++){ //on remet toutes les cartes en etat non utilisé
+            carteIngredient.get(i).setUsage(false);
         }
-        else{
+        
+        while(aDejaJouerPremier.get(ordreJoueur.get(0))){//verification si le joueur qui commence a deja jouer en premier
+            Collections.shuffle(ordreJoueur);//pour chaque debut de manche on melange l'ordre des joueurs
+            //debutManche();
+           
+        }
+        
             aDejaJouerPremier.set(ordreJoueur.get(0),true);
-        }
+        
         Champ champ;
         for(int i=0;i<this.getNbJoueur();i++){
             champ = new Champ();
@@ -148,16 +160,52 @@ public class Partie {
                 listechamp.get(i).ajouter("graine", 2);
             }
         }
-        else{
+        else{ //Partie avancée
+            Collections.shuffle(carteAlliee);
+            for(int i=0;i<this.getNbJoueur();i++){
+                collectionJoueurs.get(i).setaPiocheAlliee(false);//tous les joueurs n'ont plus d'etat :a pioché une carte alliée
+                if(collectionJoueurs.get(i).idJoueur==1){
+                    System.out.print("\nChoix depart: 1. Prendre 2 graines 2. Piocher une carte alliée\n> ");
+                    int choix=0;
+                    try{
+                        choix = input.nextInt();
+                    }catch(InputMismatchException e){
+                        System.out.println("Saisie Incorrecte.\n");
+                        debutManche();
+                    }
+                    if(choix>2){
+                        System.out.println("Le nombre doit être inférieur ou égal à 2\n");
+                        debutManche();
+                    }
+                    
+                    if(choix==1){
+                        System.out.println("Vous avez pris 2 graines");
+                        listechamp.get(i).ajouter("graine", 2);
+                    }
+                    else{
+                        System.out.println("Vous avez pioché une carte alliée");
+                        collectionJoueurs.get(i).setaPiocheAlliee(true);
+                    }
+                }
+                else{ //cas des joueurs virtuels
+                    int choix = collectionJoueurs.get(i).choixDepart();
+                     if(choix==1){
+                        System.out.println(collectionJoueurs.get(i).getNomJoueur()+" a pris 2 graines");
+                        listechamp.get(i).ajouter("graine", 2);
+                    }
+                    else{
+                        System.out.println(collectionJoueurs.get(i).getNomJoueur()+" a pioché une carte alliée");
+                        collectionJoueurs.get(i).setaPiocheAlliee(true);
+                    }
+                }
+                      
+            }
         }
         deroulementManche();
     }
     
     public void deroulementManche(){
-        for(int j=0;j<ordreJoueur.size();j++){
-            System.out.println("Derp "+ordreJoueur.get(j));
-        }
-               
+       
         int isaison = 0; //compteur pour saison
         while(isaison<=3){
         System.out.println("\nSaison : " +saison[isaison]);
@@ -180,13 +228,24 @@ public class Partie {
                             carteIngredient.get(k).afficher();
                         }
                     }
-                    collectionJoueurs.get(0).jouerCarte(carteIngredient,listechamp,this.getNbJoueur(),isaison);
+                    if(this.getModeJeu()==1){
+                        collectionJoueurs.get(0).jouerCarte(carteIngredient,listechamp,this.getNbJoueur(),isaison,1,null);
+                    }
+                    else{
+                        collectionJoueurs.get(0).jouerCarte(carteIngredient,listechamp,this.getNbJoueur(),isaison,2,carteAlliee.get(0));
+                    }
                 }
                //****************************Tour des joueurs virtuels**********************************
                 else{
-                   collectionJoueurs.get(ordreJoueur.get(j)).jouerCarte(carteIngredient,listechamp,this.getNbJoueur(),isaison);
+                    if(this.getModeJeu()==1){
+                        collectionJoueurs.get(ordreJoueur.get(j)).jouerCarte(carteIngredient,listechamp,this.getNbJoueur(),isaison,1,null);
+                    }
+                    else{
+                        collectionJoueurs.get(ordreJoueur.get(j)).jouerCarte(carteIngredient,listechamp,this.getNbJoueur(),isaison,1,carteAlliee.get(ordreJoueur.get(j)));
+                    }
                 }   
             }//fin saison
+            System.out.println("\n---------------Fin "+saison[isaison]+"--------------------------------\n");
             isaison++;
         }//fin partie
         for(int k=0;k<this.getNbJoueur();k++){
@@ -203,14 +262,16 @@ public class Partie {
         }
         else{
             manche=this.getNbJoueur();
+            System.out.println("nbjoueur: "+manche);
         }
+        this.creerDeck();
         for(int i=0;i<manche;i++){
         //Creation des cartes
-        this.creerDeck();
-        if(modeJeu==2){
-            System.out.println("Manche "+manche+": ");
-        }
-        this.debutManche();
+            if(modeJeu==2){
+                System.out.println("\nManche "+(i+1)+": ");
+            }
+            debutManche();
+            System.out.println("\n------------------------------------Fin Manche"+(i+1)+"-----------------------------------------\n");
         }
         
     
@@ -241,6 +302,8 @@ public class Partie {
         }
         return max;
     }
+    
+    
     
     //public void partieRapide(){}
     

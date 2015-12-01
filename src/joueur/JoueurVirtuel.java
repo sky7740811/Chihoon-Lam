@@ -7,6 +7,7 @@ package joueur;
 
 import partie.Champ;
 import carte.Ingredient;
+import carte.Alliee;
 import strategy.Strategy;
 import java.util.ArrayList;
 
@@ -19,12 +20,12 @@ public class JoueurVirtuel extends Joueur implements Strategy{
         this.strategy = strategy;
     }
     
-    public void jouerCarte(ArrayList<Ingredient> carteIngredient, ArrayList<Champ> champ, int nbjoueur,int i){ //i : saison
+    public void jouerCarte(ArrayList<Ingredient> carteIngredient, ArrayList<Champ> champ, int nbjoueur,int i,int modeJeu,Alliee carteAlliee){ //i : saison
 
         int choix = 0;
         do{ //refaire tant que le joueur choisisse une carte valide
         choix=strategy.choisirCarte(this.idJoueur);
-        }while(carteIngredient.get(choix)==null);
+        }while(carteIngredient.get(choix).estUtilise);
         
         System.out.println("\nCarte Choisie: ");
         carteIngredient.get(choix).afficher();
@@ -65,8 +66,8 @@ public class JoueurVirtuel extends Joueur implements Strategy{
                 champ.get(this.idJoueur-1).ajouter("graine", graineAvoler);
                 champ.get(choix3).enlever("graine", graineAvoler);
             }
-            carteIngredient.set(choix,null);
-        }
+             carteIngredient.get(choix).setUsage(true); //la carte qui vient d'etre joué est en etat utilisé
+          }
 
     
     public int choisirCarte(int id) {
@@ -81,6 +82,11 @@ public class JoueurVirtuel extends Joueur implements Strategy{
     public int choisirCible(int nbjoueur, int id){
         return 0;
     }
-        
+    
+    public int choixDepart(){
+        int choixDepart=strategy.choixDepart();
+        return choixDepart;
+    }
+            
   
 }

@@ -20,4 +20,8 @@ public class ChienDeGarde extends Alliee{
            System.out.print(" "+ valeurs[i]);
        }
     }
+    
+    public String getNomCarte(){
+        return "Chien de garde";
+    }
 }

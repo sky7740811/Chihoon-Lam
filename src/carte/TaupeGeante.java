@@ -21,4 +21,8 @@ public class TaupeGeante extends Alliee{
        }
     }
     
+    public String getNomCarte(){
+        return "Taupe Géante";
+    }
+    
 }

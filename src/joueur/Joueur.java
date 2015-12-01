@@ -8,18 +8,21 @@ import carte.Carte;
 import java.util.Scanner;
 import partie.Champ;
 import carte.Ingredient;
+import carte.Alliee;
 import java.util.ArrayList;
 
 public abstract class Joueur {
     private String nomJoueur;
     public int pointsTotal;
     public int idJoueur;
-    public String ChoixDepart;
+    public boolean aPiocheAlliee;
     public Scanner input = new Scanner(System.in);
+
     
     public Joueur(String nom, int id){
         this.nomJoueur = nom;
         this.idJoueur = id;
+        this.aPiocheAlliee = false;
     }
     
     public void setNomJoueur(String nom){
@@ -30,6 +33,10 @@ public abstract class Joueur {
         return this.nomJoueur;
     }
     
+    public void setaPiocheAlliee(boolean bool){
+        aPiocheAlliee=true;
+    }
+    
     public void finirTour(){
         
     }
@@ -38,7 +45,11 @@ public abstract class Joueur {
         
     }
 
-    public void jouerCarte(ArrayList<Ingredient> carteIngredient, ArrayList<Champ> champ, int nbJoueur, int i) {
+    public void jouerCarte(ArrayList<Ingredient> carteIngredient, ArrayList<Champ> champ, int nbJoueur, int i,int modeJeu,Alliee cartealliee) {
        
+    }
+    
+    public int choixDepart(){
+        return 0;
     }
 }

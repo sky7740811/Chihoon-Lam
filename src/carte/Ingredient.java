@@ -10,6 +10,7 @@ public class Ingredient extends Carte {
     public int valeursGeant[] = new int[4];
     public int valeursEngrais[] = new int[4];
     public int valeursFarfadets[] = new int[4];
+    public boolean estUtilise;
     public String action;
     
     
@@ -19,6 +20,7 @@ public class Ingredient extends Carte {
             valeursEngrais[i]=(int)(Math.random()*(5))+0;
             valeursFarfadets[i]=(int)(Math.random()*(5))+0;
         }
+        estUtilise = false;
     }
     
     
@@ -36,5 +38,13 @@ public class Ingredient extends Carte {
             System.out.print(" "+ valeursFarfadets[i]);
         }
         System.out.println("\n");
+    }
+    
+    public void setUsage(boolean bool){
+        estUtilise=bool;
+    }
+    
+    public boolean getUsage(){
+        return estUtilise;
     }
 }
