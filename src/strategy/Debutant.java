@@ -57,11 +57,12 @@ public class Debutant implements Strategy {
     }
     
     public int choixDepart() {
-        int choixDepart=(int)(Math.random()*(2));
-        return choixDepart;
+        int choix=(int)(Math.random()*(2));
+        return choix;
     }
-
- 
     
-    
+    public int jouerTaupeGeant(){
+        int choix=(int)(Math.random()*(2));
+        return choix;
+    }
 }

@@ -164,7 +164,7 @@ public class Partie {
                 carteAlliee.get(i).afficher();
             }
             for(int i=0;i<this.getNbJoueur();i++){
-                collectionJoueurs.get(i).setaPiocheAlliee(false);//tous les joueurs n'ont plus d'etat :a pioché une carte alliée
+                collectionJoueurs.get(i).setaPiocheAlliee(false);//tous les joueurs perdent leur carte alliee non jouée
                 if(collectionJoueurs.get(i).idJoueur==1){
                     System.out.print("\nChoix depart: 1. Prendre 2 graines 2. Piocher une carte alliée\n> ");
                     int choix=0;
@@ -224,7 +224,7 @@ public class Partie {
 
                     System.out.println("\nVotre main: ");
                     for(int k=0;k<4;k++){
-                        if(carteIngredient.get(k)!=null){
+                        if(carteIngredient.get(k).estUtilise==false){
                             System.out.println("Carte "+ (k+1));
                             carteIngredient.get(k).afficher();
                         }
@@ -315,7 +315,7 @@ public class Partie {
         System.out.print("? (1. oui 2. non)\n> ");
             int choix =input.nextInt();
             while(choix<1 || choix>2){
-                System.out.println("Veuillez saisir entre 1 et 2\n");
+                System.out.print("Veuillez saisir entre 1 et 2\n> ");
                 choix = input.nextInt();
             }
             if(choix==1){
@@ -325,11 +325,4 @@ public class Partie {
             }
         }
     }
-    
-    //public void partieRapide(){}
-    
-    
-    //public void partieAvancee(){}
-    
-    //public int aQuileTour(){}
 }

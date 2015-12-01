@@ -21,7 +21,25 @@ public class JoueurVirtuel extends Joueur implements Strategy{
     }
     
     public void jouerCarte(ArrayList<Ingredient> carteIngredient, ArrayList<Champ> champ, int nbjoueur,int i,int modeJeu,Alliee carteAlliee){ //i : saison
-
+       
+        
+        if(this.aPiocheAlliee && carteAlliee!=null && carteAlliee.getType()==1){ //si il possede un Taupe Geante
+            int jouerTaupe = strategy.jouerTaupeGeant();
+            if(jouerTaupe==1){
+                System.out.println("\nCarte Choisie: ");
+                carteAlliee.afficher();
+                int cible = strategy.choisirCible(nbjoueur, this.idJoueur);
+                cible -= 1;
+                carteAlliee.detruireMenhir(carteAlliee.valeurs[i],champ.get(cible));
+                if(cible==0){
+                    System.out.println(this.getNomJoueur()+" a détruit "+carteAlliee.getMenhirDetruits()+" menhir(s) de votre!\n");
+                }
+                else{
+                    System.out.println(this.getNomJoueur()+" a détruit "+carteAlliee.getMenhirDetruits()+" menhir(s) du Joueur "+ (cible+1)+ "\n");
+                }
+                this.setaPiocheAlliee(false);
+            }
+        }
         int choix = 0;
         do{ //refaire tant que le joueur choisisse une carte valide
         choix=strategy.choisirCarte(this.idJoueur);
@@ -84,8 +102,12 @@ public class JoueurVirtuel extends Joueur implements Strategy{
     }
     
     public int choixDepart(){
-        int choixDepart=strategy.choixDepart();
-        return choixDepart;
+        int choix=strategy.choixDepart();
+        return choix;
+    }
+    
+    public int jouerTaupeGeant(){
+        return 0;
     }
             
   

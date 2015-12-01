@@ -17,5 +17,8 @@ public interface Strategy {
     public int choisirCible(int nbjoueur, int id); //id = pour identifier quel joueur virtuel
     
     public int choixDepart();
+    
+    public int jouerTaupeGeant();
+    
     //test2
 }
