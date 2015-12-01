@@ -15,10 +15,11 @@ public class TaupeGeante extends Alliee{
     }
      
     public void afficher(){
-       System.out.println("Taupe Geante: ");
+       System.out.print("Taupe Geante: ");
        for(int i=0;i<4;i++){
-           System.out.print(" "+ valeurs[i]);
+           System.out.print(valeurs[i]+ " ");
        }
+       System.out.println("");
     }
     
     public String getNomCarte(){

@@ -142,8 +142,6 @@ public class Partie {
         
         while(aDejaJouerPremier.get(ordreJoueur.get(0))){//verification si le joueur qui commence a deja jouer en premier
             Collections.shuffle(ordreJoueur);//pour chaque debut de manche on melange l'ordre des joueurs
-            //debutManche();
-           
         }
         
             aDejaJouerPremier.set(ordreJoueur.get(0),true);
@@ -162,6 +160,9 @@ public class Partie {
         }
         else{ //Partie avancée
             Collections.shuffle(carteAlliee);
+            for(int i=0;i<carteAlliee.size();i++){
+                carteAlliee.get(i).afficher();
+            }
             for(int i=0;i<this.getNbJoueur();i++){
                 collectionJoueurs.get(i).setaPiocheAlliee(false);//tous les joueurs n'ont plus d'etat :a pioché une carte alliée
                 if(collectionJoueurs.get(i).idJoueur==1){
@@ -232,6 +233,9 @@ public class Partie {
                         collectionJoueurs.get(0).jouerCarte(carteIngredient,listechamp,this.getNbJoueur(),isaison,1,null);
                     }
                     else{
+                        if(collectionJoueurs.get(0).aPiocheAlliee){
+                        carteAlliee.get(0).afficher();
+                        }
                         collectionJoueurs.get(0).jouerCarte(carteIngredient,listechamp,this.getNbJoueur(),isaison,2,carteAlliee.get(0));
                     }
                 }
@@ -245,7 +249,7 @@ public class Partie {
                     }
                 }   
             }//fin saison
-            System.out.println("\n---------------Fin "+saison[isaison]+"--------------------------------\n");
+            System.out.println("\n----------------------Fin "+saison[isaison]+"--------------------------------\n");
             isaison++;
         }//fin partie
         for(int k=0;k<this.getNbJoueur();k++){

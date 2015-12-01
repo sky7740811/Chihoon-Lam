@@ -10,7 +10,7 @@ package carte;
  * @author Chihoon
  */
 public class Alliee extends Carte {
-    public static int valeurs[] = new int[4];
+    public int valeurs[] = new int[4];
     public boolean estUtilise;
   
      public Alliee(){
@@ -32,5 +32,9 @@ public class Alliee extends Carte {
     
     public boolean getUsage(){
         return estUtilise;
+    }
+    
+    public String getNomCarte(){
+        return null;
     }
 }

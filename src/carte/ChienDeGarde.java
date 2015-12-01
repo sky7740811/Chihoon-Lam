@@ -15,10 +15,11 @@ public class ChienDeGarde extends Alliee{
     }
      
     public void afficher(){
-       System.out.println("Chien de garde: ");
+       System.out.print("Chien de garde: ");
        for(int i=0;i<4;i++){
-           System.out.print(" "+ valeurs[i]);
+           System.out.print(valeurs[i]+ " ");
        }
+       System.out.println("");
     }
     
     public String getNomCarte(){
