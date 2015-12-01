@@ -241,9 +241,12 @@ public class Partie {
                 else{
                     if(collectionJoueurs.get(ordreJoueur.get(j)).aPiocheAlliee){//si le joueur a piocher une alliee
                         collectionJoueurs.get(ordreJoueur.get(j)).jouerCarte(carteIngredient,listechamp,this.getNbJoueur(),isaison,1,carteAlliee.get(ordreJoueur.get(j)));
+                        jouerTaupeGeante(isaison, ordreJoueur.get(j));
+                        
                     }
                     else{ //le joueur n'a pas piocher une alliee ou c'est une partie rapide
                         collectionJoueurs.get(ordreJoueur.get(j)).jouerCarte(carteIngredient,listechamp,this.getNbJoueur(),isaison,1,null);
+                        jouerTaupeGeante(isaison, ordreJoueur.get(j));
                     }
                 }   
             }//fin saison
@@ -305,7 +308,23 @@ public class Partie {
         return max;
     }
     
-    
+    public void jouerTaupeGeante(int saison, int idJoueur){ 
+        if(collectionJoueurs.get(0).aPiocheAlliee && carteAlliee.get(0).getType()==1){ // Durant le tour des autres joueurs, si le joueur reel possede un geant
+        System.out.print("Souhaitez-vous jouer utiliser votre ");
+        carteAlliee.get(0).afficher();
+        System.out.print("? (1. oui 2. non)\n> ");
+            int choix =input.nextInt();
+            while(choix<1 || choix>2){
+                System.out.println("Veuillez saisir entre 1 et 2\n");
+                choix = input.nextInt();
+            }
+            if(choix==1){
+                carteAlliee.get(0).detruireMenhir(carteAlliee.get(0).valeurs[saison],listechamp.get(idJoueur));
+                System.out.println("Vous avez détruit "+carteAlliee.get(0).getMenhirDetruits()+" menhir(s) du Joueur"+ (idJoueur+1)+ "\n");
+                collectionJoueurs.get(0).setaPiocheAlliee(false);
+            }
+        }
+    }
     
     //public void partieRapide(){}
     
