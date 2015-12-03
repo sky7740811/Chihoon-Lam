@@ -32,7 +32,7 @@ public class JoueurReel extends Joueur{
                    System.out.print("Carte "+ (k+1) + " ");
                 }
             }
-            if(this.aPiocheAlliee && carteAlliee!=null && carteAlliee.getType()==1){ //si il possede un Taupe Geante
+            if(this.aPiocheAlliee && carteAlliee.getType()==1){ //si il possede un Taupe Geante
                 System.out.print("Carte 5("+ carteAlliee.getNomCarte()+")");
             }
             System.out.print("\n> ");

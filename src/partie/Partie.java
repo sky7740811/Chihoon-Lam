@@ -220,25 +220,15 @@ public class Partie {
                             carteIngredient.get(k).afficher();
                         }
                     }
-                    if(collectionJoueurs.get(0).aPiocheAlliee){//si le joueur a piocher une alliee
-                        carteAlliee.get(0).afficher();
+                        if(collectionJoueurs.get(0).aPiocheAlliee){
+                            carteAlliee.get(0).afficher();
+                        }
                         collectionJoueurs.get(0).jouerCarte(carteIngredient,collectionJoueurs,listechamp,this.getNbJoueur(),isaison,2,carteAlliee);
-                    }
-                    else{ //le joueur n'a pas piocher une alliee ou c'est une partie rapide
-                       collectionJoueurs.get(0).jouerCarte(carteIngredient,collectionJoueurs,listechamp,this.getNbJoueur(),isaison,1,null); 
-                    }
                 }
                //****************************Tour des joueurs virtuels**********************************
                 else{
-                    if(collectionJoueurs.get(ordreJoueur.get(j)).aPiocheAlliee){//si le joueur a piocher une alliee
-                        collectionJoueurs.get(ordreJoueur.get(j)).jouerCarte(carteIngredient,collectionJoueurs,listechamp,this.getNbJoueur(),isaison,1,carteAlliee);
-                        jouerTaupeGeante(isaison, ordreJoueur.get(j));
-                        
-                    }
-                    else{ //le joueur n'a pas piocher une alliee ou c'est une partie rapide
-                        collectionJoueurs.get(ordreJoueur.get(j)).jouerCarte(carteIngredient,collectionJoueurs,listechamp,this.getNbJoueur(),isaison,1,null);
-                        jouerTaupeGeante(isaison, ordreJoueur.get(j));
-                    }
+                    collectionJoueurs.get(ordreJoueur.get(j)).jouerCarte(carteIngredient,collectionJoueurs,listechamp,this.getNbJoueur(),isaison,1,carteAlliee);
+                    jouerTaupeGeante(isaison, ordreJoueur.get(j));
                 }   
             }//fin saison
             System.out.println("\n----------------------Fin "+saison[isaison]+"--------------------------------\n");
