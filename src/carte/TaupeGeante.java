@@ -32,21 +32,25 @@ public class TaupeGeante extends Alliee{
     }
     
     public void detruireMenhir(int valeur, Champ champ){
-        
-        
+        int menhirs;
         if(champ.nbMenhir<valeur){
-            menhirDetruits= champ.nbMenhir;
+            menhirs= champ.nbMenhir;
         }
         else if(champ.nbMenhir==0){
-            menhirDetruits= 0;
+            menhirs= 0;
         }
         else{
-            menhirDetruits = valeur;
+            menhirs = valeur;
         }
+        setMenhirDetruits(menhirs);
+        
         champ.nbMenhir-=valeur; 
         if(champ.nbMenhir<0){
             champ.nbMenhir=0;
         }
+    }
+    public void setMenhirDetruits(int menhirs){
+        menhirDetruits = menhirs;
     }
     
     public int getMenhirDetruits(){

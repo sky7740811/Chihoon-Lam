@@ -58,10 +58,10 @@ public class JoueurReel extends Joueur{
                 }
             }
             else{
-                choix -= 1;
+                choix -= 1; // car carte 1 = carteIngredient.get(0)
 
                 if(carteIngredient.get(choix).estUtilise==false){ //Si la carte ingredient choisie existe dans la main
-                    //choixnull = false;
+                    
                     //choisir l'action
                     System.out.println("\nCarte Choisie: ");
                     carteIngredient.get(choix).afficher();
@@ -74,22 +74,17 @@ public class JoueurReel extends Joueur{
                         System.out.println("Saisie Incorrecte.\n");
                         jouerCarte(carteIngredient, champ, nbjoueur, saison, modeJeu, carteAlliee);
                     }
+                    //Jouer Geant
                     if(choix2==1){
-                        System.out.println("\nVous avez récupéré " + carteIngredient.get(choix).valeursGeant[saison]+ " graine(s)\n");//Carte choisie au tour j au saison i
-                        champ.get(0).ajouter("graine", carteIngredient.get(choix).valeursGeant[saison]);
+                        carteIngredient.get(choix).jouerGeant(carteIngredient.get(choix).valeursGeant[saison], champ.get(this.getIdJoueur()-1));
+                        System.out.println("\nVous avez récupéré " + carteIngredient.get(choix).valeursGeant[saison]+ " graine(s)\n");
                     }
+                    //Jouer Engrais
                     else if(choix2==2){
-                        int menhirApousser = 0;
-                        if(carteIngredient.get(choix).valeursEngrais[saison]<=champ.get(0).nbGraine){
-                        menhirApousser = carteIngredient.get(choix).valeursEngrais[saison];
-                        }
-                        else{
-                                menhirApousser = champ.get(0).nbGraine;
-                            }
-                        System.out.println("\nVous avez poussé " + menhirApousser + " menhir(s)\n");//Carte choisie au tour j au saison i
-                        champ.get(0).ajouter("menhir", menhirApousser);
-                        champ.get(0).enlever("graine", menhirApousser);
+                         carteIngredient.get(choix).jouerEngrais(carteIngredient.get(choix).valeursEngrais[saison], champ.get(this.getIdJoueur()-1));
+                         System.out.println("\nVous avez poussé " + carteIngredient.get(choix).getMenhirApousser() + " menhir(s)\n");
                     }
+                    //Jouer Farfadets
                     else if(choix2==3){
                         System.out.print("\nChoisissez votre cible (entre Joueur2 ~ " + nbjoueur +") : \n> "); 
                         int choix3 = input.nextInt();
