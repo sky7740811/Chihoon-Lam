@@ -98,7 +98,7 @@ public class Partie {
         Alliee alliee;
         int nbcartesIngredient = this.getNbJoueur()*4;
         for(int i = 0; i<nbcartesIngredient; i++){
-            ingredient = new Ingredient();
+            ingredient = new Ingredient(i);
             carteIngredient.add(ingredient);
         }
         /**
@@ -135,7 +135,7 @@ public class Partie {
     public void debutManche(){
         
         Collections.shuffle(ordreJoueur);
-        Collections.shuffle(carteIngredient);//et aussi les cartes ingredients
+        Collections.shuffle(carteIngredient);//on melange l'ensemble des cartes ingredients
         for(int i=0;i<carteIngredient.size();i++){ //on remet toutes les cartes en etat non utilisé
             carteIngredient.get(i).setUsage(false);
         }

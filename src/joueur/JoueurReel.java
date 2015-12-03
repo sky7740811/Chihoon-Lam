@@ -45,8 +45,8 @@ public class JoueurReel extends Joueur{
                    System.out.println("Saisie Incorrecte.\n");
                     jouerCarte(carteIngredient, champ, nbjoueur, saison, modeJeu, carteAlliee); 
                 }
-                if(cible<2 || cible>6){
-                    System.out.println("Veuillez cibler entre le joueur 2 et 5");
+                if(cible<2 || cible>nbjoueur){
+                    System.out.println("Veuillez cibler entre le joueur 2 et "+ nbjoueur);
                     jouerCarte(carteIngredient, champ, nbjoueur, saison, modeJeu, carteAlliee); 
                 }
                 else{
