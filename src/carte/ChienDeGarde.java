@@ -10,6 +10,7 @@ package carte;
  * @author Chihoon
  */
 public class ChienDeGarde extends Alliee{
+    public int grainesProtege;
     public ChienDeGarde(){
         super();
     }
@@ -30,7 +31,26 @@ public class ChienDeGarde extends Alliee{
         return 2;
     }
     
-    public void protegerGraine(){
-        
+    public int protegerGraine(int valeurChien, int valeurFarfadet){
+        int grainesP; //nb graines proteges
+        int grainesV; //nb graines a voler
+        if(valeurChien>=valeurFarfadet){
+            grainesP = valeurFarfadet;
+            grainesV = 0;
+        }
+        else{
+            grainesP = valeurChien;
+            grainesV = valeurFarfadet - valeurChien;
+        }
+        setGraineProtege(grainesP);
+        return grainesV;
+    }
+    
+    public void setGraineProtege(int graines){
+        grainesProtege = graines;
+    }
+    
+    public int getGraineProtege(){
+        return grainesProtege;
     }
 }

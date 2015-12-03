@@ -74,8 +74,12 @@ public class JoueurVirtuel extends Joueur implements Strategy{
                             choix3 = input.nextInt();
                         }
                         if(choix3==1){ // Le joueur joue son chien de garde
-                            collectionAlliee.get(cible2-1).protegerGraine();
-                            carteIngredient.get(choix).jouerFarfadets(carteIngredient.get(choix).valeursFarfadets[saison], champ.get(this.idJoueur-1), champ.get(cible2-1));
+                            //Nb graines proteges
+                            int grainesProtege = collectionAlliee.get(cible2-1).protegerGraine(collectionAlliee.get(cible2-1).valeurs[saison], carteIngredient.get(choix).valeursFarfadets[saison]);
+                            //Nb graines a voler à nouveau
+                            int grainesAvoler = carteIngredient.get(choix).valeursFarfadets[saison] - grainesProtege;
+                            System.out.println("\nVous avez protégé "+grainesProtege+ " !");
+                            carteIngredient.get(choix).jouerFarfadets(grainesAvoler, champ.get(this.idJoueur-1), champ.get(cible2-1));
                         }
                         else{ // Le joueur ne joue pas son chien de garde
                             carteIngredient.get(choix).jouerFarfadets(carteIngredient.get(choix).valeursFarfadets[saison], champ.get(this.idJoueur-1), champ.get(cible2-1));
@@ -91,7 +95,7 @@ public class JoueurVirtuel extends Joueur implements Strategy{
                     if(cible2!=1 && collectionJoueurs.get(cible2-1).aPiocheAlliee && collectionAlliee.get(cible2-1).getType()==2){//le cible a un chien de garde
                         int jouerChienGarde = strategy.jouerChienGarde();
                         if(jouerChienGarde==1){
-                            collectionAlliee.get(cible2-1).protegerGraine();
+                            collectionAlliee.get(cible2-1).protegerGraine(collectionAlliee.get(cible2-1).valeurs[saison], carteIngredient.get(choix).valeursFarfadets[saison]);
                         }
                     }
                         carteIngredient.get(choix).jouerFarfadets(carteIngredient.get(choix).valeursFarfadets[saison], champ.get(this.idJoueur-1), champ.get(cible2-1));

@@ -45,9 +45,19 @@ public class Alliee extends Carte {
     
     public void detruireMenhir(int valeur, Champ champ){}
     
-    public void protegerGraine(){}
+    public int protegerGraine(int valeurChien, int valeurFarfadet){
+        return 0;
+    }
     
     public int getMenhirDetruits(){
+        return 0;
+    }
+    
+     public void setGraineProtege(int graines){
+  
+    }
+    
+    public int getGraineProtege(){
         return 0;
     }
 }
