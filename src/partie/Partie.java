@@ -1,18 +1,14 @@
 
 package partie;
 import carte.Carte;
-import java.util.Arrays;
 import java.util.Scanner;
 import carte.Ingredient;
 import joueur.Joueur;
 import joueur.JoueurReel;
 import joueur.JoueurVirtuel;
 import strategy.Debutant;
-import strategy.Strategy;
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.Collections;
-import java.util.LinkedList;
 import carte.Ingredient;
 import carte.Alliee;
 import carte.TaupeGeante;
@@ -133,33 +129,28 @@ public class Partie {
      * Methode debut Manche permet de melanger l'ordre des tours des joueurs et faire le choix depart
      */
     public void debutManche(){
-        
+        /*melanger l'ordre des tours*/
         Collections.shuffle(ordreJoueur);
-        Collections.shuffle(carteIngredient);//on melange l'ensemble des cartes ingredients
-        for(int i=0;i<carteIngredient.size();i++){ //on remet toutes les cartes en etat non utilisé
+        
+        //on melange l'ensemble des cartes ingredients
+        Collections.shuffle(carteIngredient);
+        for(int i=0;i<carteIngredient.size();i++){ //on remet toutes les cartes en etat non utilisé (car apres une manche elles sont tous en etat utilisé
             carteIngredient.get(i).setUsage(false);
         }
-        
-        while(aDejaJouerPremier.get(ordreJoueur.get(0))){//verification si le joueur qui commence a deja jouer en premier
-            Collections.shuffle(ordreJoueur);//pour chaque debut de manche on melange l'ordre des joueurs
+        //verification si le joueur qui commence a deja jouer en premier
+        while(aDejaJouerPremier.get(ordreJoueur.get(0))){//true si le joueur a deja commencé en premier 
+            Collections.shuffle(ordreJoueur);//On mélange tant qu'on trouve le joueur ayant pas encore commencé en premier
         }
-        
-            aDejaJouerPremier.set(ordreJoueur.get(0),true);
-        
-        Champ champ;
-        for(int i=0;i<this.getNbJoueur();i++){
-            champ = new Champ();
-            listechamp.add(champ);
-        }
-        if(this.getModeJeu()==1){
-            //2 cailloux pour chaque joueur
-            
+        aDejaJouerPremier.set(ordreJoueur.get(0),true); //Ce joueur ne commencera plus en premier aux prochaines manches
+
+        //Choix départ
+        if(this.getModeJeu()==1){ //partie rapide : 2 cailloux pour chaque joueur
             for(int i=0;i<this.getNbJoueur();i++){
                 listechamp.get(i).ajouter("graine", 2);
             }
         }
         else{ //Partie avancée
-            Collections.shuffle(carteAlliee);
+            Collections.shuffle(carteAlliee); // on melange les cartes alliées
             for(int i=0;i<carteAlliee.size();i++){
                 carteAlliee.get(i).afficher();
             }
@@ -212,7 +203,6 @@ public class Partie {
         System.out.println("\nSaison : " +saison[isaison]);
             for(int j=0;j<ordreJoueur.size();j++){
                System.out.print("\nTour : " + collectionJoueurs.get(ordreJoueur.get(j)).getNomJoueur() + "\n\n");
-               
 
                //*******************Tour du Joueur reel********************************
                if(ordreJoueur.get(j)==0){ 
@@ -260,18 +250,24 @@ public class Partie {
     }
     public void lancerPartie(){
   
-        /*-----------------------Partie Rapide----------------------------------*/
+       
         //Creation des cartes
-        if(modeJeu==1){
+        if(modeJeu==1){ //parite rapide 
             manche=1;
         }
         else{
             manche=this.getNbJoueur();
             System.out.println("nbjoueur: "+manche);
         }
-        this.creerDeck();
+        this.creerDeck(); //Creation de l'ensemble des cartes 
+        //Initialisation de champ
+        Champ champ;
+        for(int i=0;i<this.getNbJoueur();i++){
+            champ = new Champ();
+            listechamp.add(champ);
+        }
+        
         for(int i=0;i<manche;i++){
-        //Creation des cartes
             if(modeJeu==2){
                 System.out.println("\nManche "+(i+1)+": ");
             }
@@ -308,6 +304,7 @@ public class Partie {
         return max;
     }
     
+    //Methode permettant le joueur réel à jouer Taupe Geante pendant les tours d'adversaires si il a Taupe Geante en main
     public void jouerTaupeGeante(int saison, int idJoueur){ 
         if(collectionJoueurs.get(0).aPiocheAlliee && carteAlliee.get(0).getType()==1){ // Durant le tour des autres joueurs, si le joueur reel possede un geant
         System.out.print("Souhaitez-vous jouer utiliser votre ");

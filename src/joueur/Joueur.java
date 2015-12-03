@@ -33,6 +33,10 @@ public abstract class Joueur {
         return this.nomJoueur;
     }
     
+    public int getIdJoueur(){
+        return this.idJoueur;
+    }
+    
     public void setaPiocheAlliee(boolean bool){
         aPiocheAlliee=bool;
     }
