@@ -23,9 +23,9 @@ public class Ingredient extends Carte {
     
     public Ingredient(int id){ //id = identifiant d'une carte (0 à 23)
         for(int i=0 ; i<4; i++){ // i est le compteur pour les valeurs d'une carte ingredient
-            valeursGeant[i]=this.Geant[id][i];
-            valeursEngrais[i]=this.Engrais[id][i];
-            valeursFarfadets[i]=this.Farfadets[id][i];
+            valeursGeant[i]=Geant[id][i];
+            valeursEngrais[i]=Engrais[id][i];
+            valeursFarfadets[i]=Farfadets[id][i];
         }
         estUtilise = false;
     }

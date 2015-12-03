@@ -20,9 +20,10 @@ public class JoueurReel extends Joueur{
         super(nom,id);
     }
     
-    public void jouerCarte(ArrayList<Ingredient> carteIngredient, ArrayList<Champ> champ, int nbjoueur,int saison,int modeJeu, Alliee carteAlliee){ //i : saison
+    public void jouerCarte(ArrayList<Ingredient> carteIngredient, ArrayList<Joueur> collectionJoueurs, ArrayList<Champ> champ, int nbjoueur,int saison,int modeJeu, ArrayList<Alliee> collectionAlliee){ //i : saison
 
       int choix = 0;
+      Alliee carteAlliee = collectionAlliee.get(0);
       //boolean choixnull = true; //false si le joueur choisit une carte valide.
      // do{
             System.out.println("\nQuelle carte souhaitez-vous de jouer?");
@@ -43,18 +44,18 @@ public class JoueurReel extends Joueur{
                     cible = input.nextInt();
                 }catch(InputMismatchException e){
                    System.out.println("Saisie Incorrecte.\n");
-                    jouerCarte(carteIngredient, champ, nbjoueur, saison, modeJeu, carteAlliee); 
+                    jouerCarte(carteIngredient, collectionJoueurs, champ, nbjoueur, saison, modeJeu, collectionAlliee); 
                 }
                 if(cible<2 || cible>nbjoueur){
                     System.out.println("Veuillez cibler entre le joueur 2 et "+ nbjoueur);
-                    jouerCarte(carteIngredient, champ, nbjoueur, saison, modeJeu, carteAlliee); 
+                    jouerCarte(carteIngredient, collectionJoueurs, champ, nbjoueur, saison, modeJeu, collectionAlliee); 
                 }
                 else{
                     cible-=1; 
                     carteAlliee.detruireMenhir(carteAlliee.valeurs[saison],champ.get(cible));
                     System.out.println("Vous avez détruit "+carteAlliee.getMenhirDetruits()+" menhir(s) du Joueur"+ (cible+1)+ "\n");
                     this.setaPiocheAlliee(false);
-                    jouerCarte(carteIngredient, champ, nbjoueur, saison, modeJeu, carteAlliee); 
+                    jouerCarte(carteIngredient, collectionJoueurs, champ, nbjoueur, saison, modeJeu, collectionAlliee); 
                 }
             }
             else{
@@ -72,7 +73,7 @@ public class JoueurReel extends Joueur{
                         choix2 = input.nextInt();
                     }catch(InputMismatchException e){
                         System.out.println("Saisie Incorrecte.\n");
-                        jouerCarte(carteIngredient, champ, nbjoueur, saison, modeJeu, carteAlliee);
+                        jouerCarte(carteIngredient, collectionJoueurs, champ, nbjoueur, saison, modeJeu, collectionAlliee);
                     }
                     //Jouer Geant
                     if(choix2==1){
@@ -97,13 +98,13 @@ public class JoueurReel extends Joueur{
                     }
                     else{
                         System.out.println("Veuillez choisir entre 1 et 3");
-                        jouerCarte(carteIngredient, champ, nbjoueur, saison, modeJeu,carteAlliee);
+                        jouerCarte(carteIngredient, collectionJoueurs, champ, nbjoueur, saison, modeJeu,collectionAlliee);
                     }
                 carteIngredient.get(choix).setUsage(true);
                 }
                 else{
                     System.out.println("\nVeuillez choisir une carte valide");
-                    jouerCarte(carteIngredient, champ, nbjoueur, saison, modeJeu, carteAlliee); 
+                    jouerCarte(carteIngredient, collectionJoueurs, champ, nbjoueur, saison, modeJeu, collectionAlliee); 
                 }
             }
       //  }while(choixnull);

@@ -43,9 +43,9 @@ public class Alliee extends Carte {
         return 0;
     }
     
-    public void detruireMenhir(int valeur, Champ champ){
-        
-    }
+    public void detruireMenhir(int valeur, Champ champ){}
+    
+    public void protegerGraine(){}
     
     public int getMenhirDetruits(){
         return 0;

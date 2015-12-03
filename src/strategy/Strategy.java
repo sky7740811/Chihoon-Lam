@@ -20,5 +20,7 @@ public interface Strategy {
     
     public int jouerTaupeGeant();
     
+    public int jouerChienGarde();
+    
     //test2
 }

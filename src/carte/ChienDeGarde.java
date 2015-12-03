@@ -29,4 +29,8 @@ public class ChienDeGarde extends Alliee{
     public int getType(){
         return 2;
     }
+    
+    public void protegerGraine(){
+        
+    }
 }

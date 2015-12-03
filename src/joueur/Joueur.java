@@ -49,7 +49,7 @@ public abstract class Joueur {
         
     }
 
-    public void jouerCarte(ArrayList<Ingredient> carteIngredient, ArrayList<Champ> champ, int nbJoueur, int i,int modeJeu,Alliee cartealliee) {
+    public void jouerCarte(ArrayList<Ingredient> carteIngredient, ArrayList<Joueur> collectionjoueurs, ArrayList<Champ> champ, int nbJoueur, int i,int modeJeu,ArrayList<Alliee> cartealliee) {
        
     }
     

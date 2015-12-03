@@ -65,4 +65,9 @@ public class Debutant implements Strategy {
         int choix=(int)(Math.random()*(2));
         return choix;
     }
+    
+    public int jouerChienGarde(){
+        int choix=(int)(Math.random()*(2));
+        return choix;
+    }
 }

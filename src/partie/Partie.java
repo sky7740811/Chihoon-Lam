@@ -7,6 +7,7 @@ import joueur.Joueur;
 import joueur.JoueurReel;
 import joueur.JoueurVirtuel;
 import strategy.Debutant;
+import strategy.Strategy;
 import java.util.ArrayList;
 import java.util.Collections;
 import carte.Ingredient;
@@ -221,21 +222,21 @@ public class Partie {
                     }
                     if(collectionJoueurs.get(0).aPiocheAlliee){//si le joueur a piocher une alliee
                         carteAlliee.get(0).afficher();
-                        collectionJoueurs.get(0).jouerCarte(carteIngredient,listechamp,this.getNbJoueur(),isaison,2,carteAlliee.get(0));
+                        collectionJoueurs.get(0).jouerCarte(carteIngredient,collectionJoueurs,listechamp,this.getNbJoueur(),isaison,2,carteAlliee);
                     }
                     else{ //le joueur n'a pas piocher une alliee ou c'est une partie rapide
-                       collectionJoueurs.get(0).jouerCarte(carteIngredient,listechamp,this.getNbJoueur(),isaison,1,null); 
+                       collectionJoueurs.get(0).jouerCarte(carteIngredient,collectionJoueurs,listechamp,this.getNbJoueur(),isaison,1,null); 
                     }
                 }
                //****************************Tour des joueurs virtuels**********************************
                 else{
                     if(collectionJoueurs.get(ordreJoueur.get(j)).aPiocheAlliee){//si le joueur a piocher une alliee
-                        collectionJoueurs.get(ordreJoueur.get(j)).jouerCarte(carteIngredient,listechamp,this.getNbJoueur(),isaison,1,carteAlliee.get(ordreJoueur.get(j)));
+                        collectionJoueurs.get(ordreJoueur.get(j)).jouerCarte(carteIngredient,collectionJoueurs,listechamp,this.getNbJoueur(),isaison,1,carteAlliee);
                         jouerTaupeGeante(isaison, ordreJoueur.get(j));
                         
                     }
                     else{ //le joueur n'a pas piocher une alliee ou c'est une partie rapide
-                        collectionJoueurs.get(ordreJoueur.get(j)).jouerCarte(carteIngredient,listechamp,this.getNbJoueur(),isaison,1,null);
+                        collectionJoueurs.get(ordreJoueur.get(j)).jouerCarte(carteIngredient,collectionJoueurs,listechamp,this.getNbJoueur(),isaison,1,null);
                         jouerTaupeGeante(isaison, ordreJoueur.get(j));
                     }
                 }   
