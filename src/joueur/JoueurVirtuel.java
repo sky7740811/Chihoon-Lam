@@ -100,10 +100,17 @@ public class JoueurVirtuel extends Joueur implements Strategy{
                             //Nb graines a voler à nouveau
                             int grainesProtege = collectionAlliee.get(cible2-1).getGraineProtege();
                             System.out.println("\n" + collectionJoueurs.get(cible2-1).getNomJoueur()+" a protégé "+grainesProtege+ " graines!");
+                            carteIngredient.get(choix).jouerFarfadets(grainesAvoler, champ.get(this.idJoueur-1), champ.get(cible2-1));
+                        }
+                        else{ // le cible ne joue pas chien de garde
+                            carteIngredient.get(choix).jouerFarfadets(carteIngredient.get(choix).valeursFarfadets[saison], champ.get(this.idJoueur-1), champ.get(cible2-1));
                         }
                     }
+                    else{
                         carteIngredient.get(choix).jouerFarfadets(carteIngredient.get(choix).valeursFarfadets[saison], champ.get(this.idJoueur-1), champ.get(cible2-1));
-                        System.out.println("\n"+this.getNomJoueur()+" a volé " + carteIngredient.get(choix).getGraineAvoler() + " graine(s) du " + collectionJoueurs.get(cible2-1).getNomJoueur()+"\n"); 
+                    }
+                    System.out.println("\n"+this.getNomJoueur()+" a volé " + carteIngredient.get(choix).getGraineAvoler() + " graine(s) du " + collectionJoueurs.get(cible2-1).getNomJoueur()+"\n"); 
+                    
                     
                 }
              carteIngredient.get(choix).setUsage(true); //la carte qui vient d'etre joué devient en etat utilisé
