@@ -15,6 +15,7 @@ public class Ingredient extends Carte {
     public String action;
     public int menhirApousser;
     public int graineAvoler;
+
     //liste des cartes ingredients : il y a 24 cartes
     public static final int Geant[][]={{1,1,1,1},{2,0,1,1},{0,0,4,0},{1,3,1,0},{2,1,1,1},{1,2,2,0},{2,1,1,2},{0,3,0,3},{1,2,1,2},{1,3,1,2},{2,2,0,3},{2,2,3,1},{2,2,3,1},{2,2,2,2},{3,1,3,1},{4,1,1,1},{2,3,2,0},{2,2,3,0},{3,1,4,1},{2,4,1,2},{3,3,3,0},{1,2,2,1},{4,0,1,1},{2,0,1,3}};
     public static final int Engrais[][]={{2,0,1,1},{1,3,0,0},{0,2,2,0},{1,2,1,1},{1,0,2,2},{1,1,2,1},{1,1,1,3},{2,1,3,0},{1,0,1,4},{2,1,2,2},{1,1,4,1},{2,3,0,3},{2,3,0,3},{0,4,4,0},{1,4,2,1},{1,2,1,3},{0,4,3,0},{1,1,1,4},{2,1,3,3},{2,2,2,3},{1,3,3,2},{1,2,3,0},{1,1,3,1},{0,3,0,3}};
@@ -81,10 +82,9 @@ public class Ingredient extends Carte {
             else{
                 graines=cible.nbGraine;
             }
-            setGraineAvoler(graines);
-            
             attaqueur.ajouter("graine", graines);
             cible.enlever("graine", graines);
+            setGraineAvoler(graines);
     }
     
     public void setMenhirApousser(int menhirs){
