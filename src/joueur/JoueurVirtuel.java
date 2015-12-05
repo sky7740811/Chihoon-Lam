@@ -40,7 +40,7 @@ public class JoueurVirtuel extends Joueur implements Strategy{
         }
         int choix = 0;
         do{ //refaire tant que le joueur choisisse une carte valide
-        choix=strategy.choisirCarte(this.idJoueur);
+        choix=strategy.choisirCarte(this.idJoueur,saison,carteIngredient);
         }while(carteIngredient.get(choix).estUtilise);
         
         System.out.println("\nCarte Choisie: ");
@@ -120,7 +120,7 @@ public class JoueurVirtuel extends Joueur implements Strategy{
     }
 
     
-    public int choisirCarte(int id) {
+    public int choisirCarte(int id, int saison, ArrayList<Ingredient> carteIngredient) {
         return 0;
     }
 

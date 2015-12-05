@@ -103,11 +103,11 @@ public class Partie {
          */
         if(modeJeu==2){ 
             for(int i = 0; i<3; i++){
-                alliee = new TaupeGeante();
+                alliee = new TaupeGeante(i);
                 carteAlliee.add(alliee);
             }
             for(int i = 0; i<3; i++){
-                alliee = new ChienDeGarde();
+                alliee = new ChienDeGarde(i);
                 carteAlliee.add(alliee);
             }
         } 

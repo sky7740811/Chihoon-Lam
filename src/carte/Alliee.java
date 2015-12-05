@@ -14,10 +14,8 @@ public class Alliee extends Carte {
     public int valeurs[] = new int[4];
     public boolean estUtilise;
   
-     public Alliee(){
-        for(int i=0;i<4;i++){
-            valeurs[i]=(int)(Math.random()*(4))+0;
-        }
+     
+     public Alliee(int id){
         estUtilise=false;
     }
      

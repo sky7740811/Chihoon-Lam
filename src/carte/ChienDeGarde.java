@@ -11,8 +11,14 @@ package carte;
  */
 public class ChienDeGarde extends Alliee{
     public int grainesProtege;
-    public ChienDeGarde(){
-        super();
+    
+    public static final int valeur[][]={{2,0,2,0},{1,2,0,1},{0,1,3,0}};
+    
+    public ChienDeGarde(int id){
+        super(id);
+        for(int i=0;i<4;i++){
+            valeurs[i]=valeur[id][i];
+        }
     }
      
     public void afficher(){

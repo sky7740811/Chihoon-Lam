@@ -12,8 +12,14 @@ import partie.Champ;
  */
 public class TaupeGeante extends Alliee{
     public int menhirDetruits;
-    public TaupeGeante(){
-        super();
+    
+    public static final int valeur[][]={{1,1,1,1},{0,2,2,0},{0,1,2,1}};
+    
+    public TaupeGeante(int id){
+        super(id);
+        for(int i=0;i<4;i++){
+            valeurs[i]=valeur[id][i];
+        }
     }
      
     public void afficher(){
