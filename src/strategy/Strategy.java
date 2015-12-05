@@ -22,9 +22,9 @@ public interface Strategy {
     
     public int choixDepart();
     
-    public int jouerTaupeGeant();
+    public int jouerTaupeGeant(int id, int nbjoueur,int saison, int valeur, ArrayList<Champ> champ);
     
-    public int jouerChienGarde();
+    public int jouerChienGarde(int valeur);
     
     //Uniquement pour niveau Intermediaire
  

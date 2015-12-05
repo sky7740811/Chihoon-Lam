@@ -52,12 +52,12 @@ public class Debutant implements Strategy {
         return choix;
     }
     
-    public int jouerTaupeGeant(){
+    public int jouerTaupeGeant(int id, int nbjoueur,int saison, int valeur, ArrayList<Champ> champ){
         int choix=(int)(Math.random()*(2));
         return choix;
     }
     
-    public int jouerChienGarde(){
+    public int jouerChienGarde(int valeur){
         int choix=(int)(Math.random()*(2));
         return choix;
     }

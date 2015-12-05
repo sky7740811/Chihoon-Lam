@@ -97,7 +97,7 @@ public class Intermediaire implements Strategy {
                     }
                     else{ //Sinon il joue farfadet
                         choixAction = 3;
-                        setCible(imaxGraine); // on enregistre l'index du joueur ciblé
+                        setCible(imaxGraine+1); // on enregistre l'index du joueur ciblé
                     }
                 }
                 else{ //si valeur geant est egale à celle du farfadet, on joue geant
@@ -120,13 +120,41 @@ public class Intermediaire implements Strategy {
         return 2;
     }
     
-    public int jouerTaupeGeant(){
-        int choix=(int)(Math.random()*(2));
+    //Le joueur attaquera en priorité le joueur ayant le plus de menhirs
+    public int jouerTaupeGeant(int id, int nbjoueur,int saison, int valeur, ArrayList<Champ> champ){
+        int choix=0;
+        if(valeur==0){ // si la valeur est 0, le joueur ne joue pas taupe geant
+            choix = 0;
+        }
+        else{
+            int maxMenhir = 0;
+            int imaxMenhir = 0;
+            for(int i = 0 ; i<nbjoueur; i++){
+                if(i!=(id-1)){ //On exclut le champ du joueur qui joue
+                    if(champ.get(i).nbMenhir>maxMenhir){ // On essaye de trouver un joueur ayant le plus de menhir
+                        maxMenhir = champ.get(i).nbMenhir;
+                        imaxMenhir = i;
+                    }
+                }
+            }
+            if(maxMenhir==0){ //Si tout le monde a 0 menhir, le joueur ne joue pas taupe geante
+                choix = 0;
+            }
+            else{
+                choix = 1;
+                setCible(imaxMenhir+1);
+            }
+        }
+        
         return choix;
     }
     
-    public int jouerChienGarde(){
-        int choix=(int)(Math.random()*(2));
+    //Si la valeur du chien de garde est positif, le joueur joue chien de garde
+    public int jouerChienGarde(int valeur){
+        int choix = 0;
+        if(valeur>0){
+            choix = 1;
+        }
         return choix;
     }
     

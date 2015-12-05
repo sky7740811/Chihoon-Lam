@@ -21,23 +21,27 @@ public class JoueurVirtuel extends Joueur implements Strategy{
     }
     
     public void jouerCarte(ArrayList<Ingredient> carteIngredient, ArrayList<Joueur> collectionJoueurs, ArrayList<Champ> champ, int nbjoueur,int saison,int modeJeu,ArrayList<Alliee> collectionAlliee){ //i : saison
-        Alliee carteAlliee = collectionAlliee.get(this.getIdJoueur()-1); // ex. Joueur 2 : collectionAlliee.get(2-1)
-        if(this.aPiocheAlliee && carteAlliee!=null && carteAlliee.getType()==1){ //si il possede un Taupe Geante
-            int jouerTaupe = strategy.jouerTaupeGeant(); // 1 si il joue Taupe Geant
-            if(jouerTaupe==1){
-                System.out.println("\nCarte Choisie: ");
-                carteAlliee.afficher();
-                int cible = strategy.choisirCible(nbjoueur, this.idJoueur, strategy.getCible());
-                carteAlliee.detruireMenhir(carteAlliee.valeurs[saison],champ.get(cible-1));
-                if(cible==1){
-                    System.out.println(this.getNomJoueur()+" a détruit "+carteAlliee.getMenhirDetruits()+" menhir(s) de votre!\n");
+        if(modeJeu==2){ //jouer taupe geante en partie avancee
+           Alliee carteAlliee = collectionAlliee.get(this.getIdJoueur()-1); // ex. Joueur 2 : collectionAlliee.get(2-1)
+             if(this.aPiocheAlliee && carteAlliee!=null && carteAlliee.getType()==1){ //si il possede un Taupe Geante
+            int jouerTaupe = strategy.jouerTaupeGeant(this.idJoueur, nbjoueur, saison, carteAlliee.valeurs[saison], champ ); // 1 si il joue Taupe Geant
+                if(jouerTaupe==1){
+                    System.out.println("\nCarte Choisie: ");
+                    carteAlliee.afficher();
+                    int cible = strategy.choisirCible(nbjoueur, this.idJoueur, strategy.getCible());
+                    carteAlliee.detruireMenhir(carteAlliee.valeurs[saison],champ.get(cible-1));
+                    if(cible==1){
+                        System.out.println(this.getNomJoueur()+" a détruit "+carteAlliee.getMenhirDetruits()+" menhir(s) de votre!\n");
+                    }
+                    else{
+                        System.out.println(this.getNomJoueur()+" a détruit "+carteAlliee.getMenhirDetruits()+" menhir(s) du " + collectionJoueurs.get(cible-1).getNomJoueur()+"\n");
+                    }
+                    this.setaPiocheAlliee(false);
                 }
-                else{
-                    System.out.println(this.getNomJoueur()+" a détruit "+carteAlliee.getMenhirDetruits()+" menhir(s) du" + collectionJoueurs.get(cible-1).getNomJoueur()+"\n");
-                }
-                this.setaPiocheAlliee(false);
             }
-        }
+        } 
+      
+       // --------------------------Jouer une carte ingredient
         int choix = 0;
         do{ //refaire tant que le joueur choisisse une carte valide
         choix=strategy.choisirCarte(this.idJoueur,saison,carteIngredient);
@@ -47,6 +51,7 @@ public class JoueurVirtuel extends Joueur implements Strategy{
         carteIngredient.get(choix).afficher();
 
         int choix2 = strategy.choisirAction(this.idJoueur, nbjoueur, saison, carteIngredient.get(choix), champ);
+        System.out.println("Strategie choisi: " + choix2);
         //-----------------Jouer Geant------------------------
             if(choix2==1){
                 carteIngredient.get(choix).jouerGeant(carteIngredient.get(choix).valeursGeant[saison], champ.get(this.getIdJoueur()-1));
@@ -60,6 +65,7 @@ public class JoueurVirtuel extends Joueur implements Strategy{
         //---------------Jouer Farfadets--------------------------
             else{
                 int cible2 = strategy.choisirCible(nbjoueur, this.idJoueur,strategy.getCible());
+                System.out.println("Cible: "+cible2);
                 //-------------------------------Attaquer le joueur reel----------------------
                 if(cible2==1){
                     if(collectionJoueurs.get(cible2-1).aPiocheAlliee && collectionAlliee.get(cible2-1).getType()==2){ // le joueur reel a un chien de garde
@@ -93,9 +99,10 @@ public class JoueurVirtuel extends Joueur implements Strategy{
                     }
                 }
                 else{ //-----------------------le cible est un autre joueur virtuel
+                    System.out.println(this.getNomJoueur()+" va attaquer "+ collectionJoueurs.get(cible2-1).getNomJoueur()+" ....");
                     if(cible2!=1 && collectionJoueurs.get(cible2-1).aPiocheAlliee && collectionAlliee.get(cible2-1).getType()==2){//le cible a un chien de garde
-                        int jouerChienGarde = strategy.jouerChienGarde();
-                        if(jouerChienGarde==1){
+                        int jouerChienGarde = strategy.jouerChienGarde(collectionAlliee.get(cible2-1).valeurs[saison]);
+                        if(jouerChienGarde==1){ // le cible joue chien de garde
                             //Nb graines a voler a nouveau
                             int grainesAvoler = collectionAlliee.get(cible2-1).protegerGraine(collectionAlliee.get(cible2-1).valeurs[saison], carteIngredient.get(choix).valeursFarfadets[saison]);
                             //Nb graines a voler à nouveau
@@ -104,11 +111,11 @@ public class JoueurVirtuel extends Joueur implements Strategy{
                             carteIngredient.get(choix).jouerFarfadets(grainesAvoler, champ.get(this.idJoueur-1), champ.get(cible2-1));
                             collectionJoueurs.get(cible2-1).setaPiocheAlliee(false);
                         }
-                        else{ // -----------------------le cible ne joue pas chien de garde
+                        else{  // ------------------le cible ne joue pas chien de garde
                             carteIngredient.get(choix).jouerFarfadets(carteIngredient.get(choix).valeursFarfadets[saison], champ.get(this.idJoueur-1), champ.get(cible2-1));
                         }
                     }
-                    else{
+                    else{// -----------------------le cible n'a pas chien de garde
                         carteIngredient.get(choix).jouerFarfadets(carteIngredient.get(choix).valeursFarfadets[saison], champ.get(this.idJoueur-1), champ.get(cible2-1));
                     }
                     System.out.println("\n"+this.getNomJoueur()+" a volé " + carteIngredient.get(choix).getGraineAvoler() + " graine(s) du " + collectionJoueurs.get(cible2-1).getNomJoueur()+"\n"); 
@@ -138,11 +145,11 @@ public class JoueurVirtuel extends Joueur implements Strategy{
         return choix;
     }
     
-    public int jouerTaupeGeant(){
+    public int jouerTaupeGeant(int id, int nbjoueur,int saison, int valeur, ArrayList<Champ> champ){
         return 0;
     }
     
-    public int jouerChienGarde(){
+    public int jouerChienGarde(int valeur){
         return 0;
     }
     

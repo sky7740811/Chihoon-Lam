@@ -23,42 +23,52 @@ public class JoueurReel extends Joueur{
     public void jouerCarte(ArrayList<Ingredient> carteIngredient, ArrayList<Joueur> collectionJoueurs, ArrayList<Champ> champ, int nbjoueur,int saison,int modeJeu, ArrayList<Alliee> collectionAlliee){ //i : saison
 
       int choix = 0;
-      Alliee carteAlliee = collectionAlliee.get(0);
-      //boolean choixnull = true; //false si le joueur choisit une carte valide.
-     // do{
+  
             System.out.println("\nQuelle carte souhaitez-vous de jouer?");
             for(int k=0;k<4;k++){
                 if(carteIngredient.get(k).estUtilise==false){
                    System.out.print("Carte "+ (k+1) + " ");
                 }
             }
-            if(this.aPiocheAlliee && carteAlliee.getType()==1){ //si il possede un Taupe Geante
-                System.out.print("Carte 5("+ carteAlliee.getNomCarte()+")");
+            if(modeJeu==2){
+                Alliee carteAlliee = collectionAlliee.get(0);
+                if(this.aPiocheAlliee && carteAlliee.getType()==1){ //si il possede un Taupe Geante
+                    System.out.print("Carte 5("+ carteAlliee.getNomCarte()+")");
+                    System.out.print("\n> ");
+                    choix = input.nextInt();
+                    if(this.aPiocheAlliee && choix==5){//le joueur a choisi Taupe Geant
+                        System.out.println("Choisissez votre cible: ");
+                        int cible=0;
+                        try{
+                            cible = input.nextInt();
+                        }catch(InputMismatchException e){
+                           System.out.println("Saisie Incorrecte.\n");
+                            jouerCarte(carteIngredient, collectionJoueurs, champ, nbjoueur, saison, modeJeu, collectionAlliee); 
+                        }
+                        if(cible<2 || cible>nbjoueur){
+                            System.out.println("Veuillez cibler entre le joueur 2 et "+ nbjoueur);
+                            jouerCarte(carteIngredient, collectionJoueurs, champ, nbjoueur, saison, modeJeu, collectionAlliee); 
+                        }
+                        else{
+                            cible-=1; 
+                            carteAlliee.detruireMenhir(carteAlliee.valeurs[saison],champ.get(cible));
+                            System.out.println("Vous avez détruit "+carteAlliee.getMenhirDetruits()+" menhir(s) du Joueur"+ (cible+1)+ "\n");
+                            this.setaPiocheAlliee(false);
+                            jouerCarte(carteIngredient, collectionJoueurs, champ, nbjoueur, saison, modeJeu, collectionAlliee); 
+                        }
+                    }
+                }
+                else{ // il possede pas un taupe geante
+                    System.out.print("\n> ");
+                    choix = input.nextInt();
+                }
+                
             }
-            System.out.print("\n> ");
-            choix = input.nextInt();
-            if(this.aPiocheAlliee && choix==5){//le joueur a choisi Taupe Geant
-                System.out.println("Choisissez votre cible: ");
-                int cible=0;
-                try{
-                    cible = input.nextInt();
-                }catch(InputMismatchException e){
-                   System.out.println("Saisie Incorrecte.\n");
-                    jouerCarte(carteIngredient, collectionJoueurs, champ, nbjoueur, saison, modeJeu, collectionAlliee); 
-                }
-                if(cible<2 || cible>nbjoueur){
-                    System.out.println("Veuillez cibler entre le joueur 2 et "+ nbjoueur);
-                    jouerCarte(carteIngredient, collectionJoueurs, champ, nbjoueur, saison, modeJeu, collectionAlliee); 
-                }
-                else{
-                    cible-=1; 
-                    carteAlliee.detruireMenhir(carteAlliee.valeurs[saison],champ.get(cible));
-                    System.out.println("Vous avez détruit "+carteAlliee.getMenhirDetruits()+" menhir(s) du Joueur"+ (cible+1)+ "\n");
-                    this.setaPiocheAlliee(false);
-                    jouerCarte(carteIngredient, collectionJoueurs, champ, nbjoueur, saison, modeJeu, collectionAlliee); 
-                }
+            else{ //partie rapide
+                System.out.print("\n> ");
+                choix = input.nextInt();
             }
-            else{
+            
                 choix -= 1; // car carte 1 = carteIngredient.get(0)
 
                 if(carteIngredient.get(choix).estUtilise==false){ //Si la carte ingredient choisie existe dans la main
@@ -108,6 +118,6 @@ public class JoueurReel extends Joueur{
                 }
             }
       //  }while(choixnull);
-    }
+    
 }
 

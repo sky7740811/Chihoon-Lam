@@ -1,13 +1,12 @@
 
 package partie;
-import carte.Carte;
 import java.util.Scanner;
 import carte.Ingredient;
 import joueur.Joueur;
 import joueur.JoueurReel;
 import joueur.JoueurVirtuel;
 import strategy.Debutant;
-import strategy.Strategy;
+import strategy.Intermediaire;
 import java.util.ArrayList;
 import java.util.Collections;
 import carte.Ingredient;
@@ -64,7 +63,7 @@ public class Partie {
          * @param modeJeu
 	 */
     
-    public Partie(String nomJoueur, int nbJoueur, int modeJeu){
+    public Partie(String nomJoueur, int nbJoueur, int modeJeu, int niveauJeu){
         Partie.nbJoueur = nbJoueur;
         Partie.modeJeu = modeJeu;
         String[] nomJoueurs = {nomJoueur, "Joueur 2", "Joueur 3", "Joueur 4", "Joueur 5", "Joueur 6"};
@@ -77,7 +76,12 @@ public class Partie {
                 joueur = new JoueurReel(nomJoueurs[i],1);
             }
             else{
-                joueur = new JoueurVirtuel(nomJoueurs[i], (i+1), new Debutant());
+                if(niveauJeu==1){
+                    joueur = new JoueurVirtuel(nomJoueurs[i], (i+1), new Debutant());
+                }
+                else{
+                    joueur = new JoueurVirtuel(nomJoueurs[i], (i+1), new Intermediaire());
+                }
             }                
             collectionJoueurs.add(joueur);
             ordreJoueur.add(i);
@@ -202,16 +206,24 @@ public class Partie {
         int isaison = 0; //compteur pour saison
         while(isaison<=3){
         System.out.println("\nSaison : " +saison[isaison]);
+        //Etat des champs de tous les joueurs
+        for(int k=0;k<this.getNbJoueur();k++){
+        System.out.println("\n"+collectionJoueurs.get(k).getNomJoueur()+" : ");
+        listechamp.get(k).afficher();
+        }
             for(int j=0;j<ordreJoueur.size();j++){
                System.out.print("\nTour : " + collectionJoueurs.get(ordreJoueur.get(j)).getNomJoueur() + "\n\n");
 
                //*******************Tour du Joueur reel********************************
                if(ordreJoueur.get(j)==0){ 
                    //Etat des champs de tous les joueurs
-                    for(int k=0;k<this.getNbJoueur();k++){
-                    System.out.println("\n"+collectionJoueurs.get(k).getNomJoueur()+" : ");
-                    listechamp.get(k).afficher();
+                   if(ordreJoueur.get(0)!=0){ //pour ne pas afficher 2 fois l'etat des champs quand c'est le joueur reel qui commence en premier
+                        for(int k=0;k<this.getNbJoueur();k++){
+                         System.out.println("\n"+collectionJoueurs.get(k).getNomJoueur()+" : ");
+                         listechamp.get(k).afficher();
+                         }
                     }
+                    
 
                     System.out.println("\nVotre main: ");
                     for(int k=0;k<4;k++){
@@ -223,11 +235,11 @@ public class Partie {
                         if(collectionJoueurs.get(0).aPiocheAlliee){
                             carteAlliee.get(0).afficher();
                         }
-                        collectionJoueurs.get(0).jouerCarte(carteIngredient,collectionJoueurs,listechamp,this.getNbJoueur(),isaison,2,carteAlliee);
+                        collectionJoueurs.get(0).jouerCarte(carteIngredient,collectionJoueurs,listechamp,this.getNbJoueur(),isaison,modeJeu,carteAlliee);
                 }
                //****************************Tour des joueurs virtuels**********************************
                 else{
-                    collectionJoueurs.get(ordreJoueur.get(j)).jouerCarte(carteIngredient,collectionJoueurs,listechamp,this.getNbJoueur(),isaison,1,carteAlliee);
+                    collectionJoueurs.get(ordreJoueur.get(j)).jouerCarte(carteIngredient,collectionJoueurs,listechamp,this.getNbJoueur(),isaison,modeJeu,carteAlliee);
                     jouerTaupeGeante(isaison, ordreJoueur.get(j));
                 }   
             }//fin saison
@@ -298,6 +310,7 @@ public class Partie {
     //Methode permettant le joueur réel à jouer Taupe Geante pendant les tours d'adversaires si il a Taupe Geante en main
     public void jouerTaupeGeante(int saison, int idJoueur){ 
         if(collectionJoueurs.get(0).aPiocheAlliee && carteAlliee.get(0).getType()==1){ // Durant le tour des autres joueurs, si le joueur reel possede un geant
+        System.out.print(collectionJoueurs.get(idJoueur).getNomJoueur()+ " possède " +listechamp.get(idJoueur).nbMenhir+ " menhir(s)\n");
         System.out.print("Souhaitez-vous jouer utiliser votre ");
         carteAlliee.get(0).afficher();
         System.out.print("? (1. oui 2. non)\n> ");

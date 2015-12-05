@@ -51,6 +51,26 @@ public class Main {
             System.out.println("Vous avez choisi la partie avancée\n");
         }
         
+        //Niveau de Jeu
+        System.out.print("Choisissez le niveau jeu : 1. Debutant 2. Intermediaire\n> ");
+        int niveauJeu = 0;
+        try{
+            niveauJeu = input.nextInt();
+        }catch(InputMismatchException e){
+            System.out.println("Saisie Incorrecte.\n");
+            main(args);
+        }
+        if(niveauJeu>2){
+            System.out.println("Le nombre doit être entre 1 et 2\n");
+            main(args);
+        }
+        if(niveauJeu==1){
+            System.out.println("Vous avez choisi le niveau debutant\n");
+        }
+        else{
+            System.out.println("Vous avez choisi le niveau intermédiaire\n");
+        }
+        
         //Nombre de joueurs
          System.out.print("Choisissez le nombre de joueurs virtuels (entre 1 et 5) : \n> ");
         int nbJoueur = 0;
@@ -67,7 +87,7 @@ public class Main {
         System.out.println("Vous avez choisi de joueur contre "+nbJoueur+" joueurs virtuels\n");
         nbJoueur++; //pour avoir le nombre total de joueurs (y compris le joueur reel)
         
-        Partie nouvellePartie = new Partie(nomJoueur,nbJoueur,modeJeu);
+        Partie nouvellePartie = new Partie(nomJoueur,nbJoueur,modeJeu,niveauJeu);
         nouvellePartie.lancerPartie();
     }
 }
