@@ -7,6 +7,7 @@ package strategy;
 import java.util.ArrayList;
 import carte.Ingredient;
 import carte.Alliee;
+import partie.Champ;
 /**
  *
  * @author Chihoon
@@ -14,9 +15,10 @@ import carte.Alliee;
 public interface Strategy {
     public int choisirCarte(int id, int saison, ArrayList<Ingredient> carteIngredient);
     
-    public int choisirAction();
+    public int choisirAction(int id, int nbjoueur, int saison, Ingredient carteIngredient, ArrayList<Champ> champ);
     
-    public int choisirCible(int nbjoueur, int id); //id = pour identifier quel joueur virtuel
+    public int choisirCible(int nbjoueur, int id, int cible); //id = pour identifier quel joueur virtuel , cible = il sert pour le niveau intermediaire
+    
     
     public int choixDepart();
     
@@ -24,5 +26,8 @@ public interface Strategy {
     
     public int jouerChienGarde();
     
+    //Uniquement pour niveau Intermediaire
+ 
+    public int getCible();
     //test2
 }

@@ -27,7 +27,7 @@ public class JoueurVirtuel extends Joueur implements Strategy{
             if(jouerTaupe==1){
                 System.out.println("\nCarte Choisie: ");
                 carteAlliee.afficher();
-                int cible = strategy.choisirCible(nbjoueur, this.idJoueur);
+                int cible = strategy.choisirCible(nbjoueur, this.idJoueur, strategy.getCible());
                 carteAlliee.detruireMenhir(carteAlliee.valeurs[saison],champ.get(cible-1));
                 if(cible==1){
                     System.out.println(this.getNomJoueur()+" a détruit "+carteAlliee.getMenhirDetruits()+" menhir(s) de votre!\n");
@@ -46,7 +46,7 @@ public class JoueurVirtuel extends Joueur implements Strategy{
         System.out.println("\nCarte Choisie: ");
         carteIngredient.get(choix).afficher();
 
-        int choix2 = strategy.choisirAction();
+        int choix2 = strategy.choisirAction(this.idJoueur, nbjoueur, saison, carteIngredient.get(choix), champ);
         //-----------------Jouer Geant------------------------
             if(choix2==1){
                 carteIngredient.get(choix).jouerGeant(carteIngredient.get(choix).valeursGeant[saison], champ.get(this.getIdJoueur()-1));
@@ -59,7 +59,7 @@ public class JoueurVirtuel extends Joueur implements Strategy{
             }
         //---------------Jouer Farfadets--------------------------
             else{
-                int cible2 = strategy.choisirCible(nbjoueur, this.idJoueur);
+                int cible2 = strategy.choisirCible(nbjoueur, this.idJoueur,strategy.getCible());
                 //-------------------------------Attaquer le joueur reel----------------------
                 if(cible2==1){
                     if(collectionJoueurs.get(cible2-1).aPiocheAlliee && collectionAlliee.get(cible2-1).getType()==2){ // le joueur reel a un chien de garde
@@ -125,11 +125,11 @@ public class JoueurVirtuel extends Joueur implements Strategy{
     }
 
     
-    public int choisirAction() {
+    public int choisirAction(int id, int nbjoueur, int saison, Ingredient carteIngredient, ArrayList<Champ> champ) {
        return 0;
     }
     
-    public int choisirCible(int nbjoueur, int id){
+    public int choisirCible(int nbjoueur, int id, int cible){
         return 0;
     }
     
@@ -143,6 +143,10 @@ public class JoueurVirtuel extends Joueur implements Strategy{
     }
     
     public int jouerChienGarde(){
+        return 0;
+    }
+    
+    public int getCible(){
         return 0;
     }
             

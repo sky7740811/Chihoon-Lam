@@ -3,6 +3,7 @@ package strategy;
 import java.util.ArrayList;
 import carte.Ingredient;
 import carte.Alliee;
+import partie.Champ;
 
 /**
  *
@@ -32,12 +33,12 @@ public class Debutant implements Strategy {
     }
 
     
-    public int choisirAction() {
+    public int choisirAction(int id, int nbjoueur, int saison, Ingredient carteIngredient, ArrayList<Champ> champ) {
         int choixAction=(int)(Math.random()*(3))+1;
         return choixAction;
     }
     
-    public int choisirCible(int nbjoueur, int id){
+    public int choisirCible(int nbjoueur, int id, int cible){
         
         int choixCible=(int)(Math.random()*(nbjoueur))+1; //ex. nbjoueur 5 : entre 1 à 5
         while(choixCible==id){
@@ -59,5 +60,9 @@ public class Debutant implements Strategy {
     public int jouerChienGarde(){
         int choix=(int)(Math.random()*(2));
         return choix;
+    }
+    
+    public int getCible(){
+        return 0;
     }
 }
