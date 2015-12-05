@@ -156,9 +156,6 @@ public class Partie {
         }
         else{ //Partie avancée
             Collections.shuffle(carteAlliee); // on melange les cartes alliées
-            for(int i=0;i<carteAlliee.size();i++){
-                carteAlliee.get(i).afficher();
-            }
             for(int i=0;i<this.getNbJoueur();i++){
                 collectionJoueurs.get(i).setaPiocheAlliee(false);//tous les joueurs perdent leur carte alliee non jouée
                 if(collectionJoueurs.get(i).idJoueur==1){
@@ -260,7 +257,6 @@ public class Partie {
         }
         else{
             manche=this.getNbJoueur();
-            System.out.println("nbjoueur: "+manche);
         }
         this.creerDeck(); //Creation de l'ensemble des cartes 
         //Initialisation de champ

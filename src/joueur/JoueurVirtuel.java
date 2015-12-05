@@ -51,7 +51,7 @@ public class JoueurVirtuel extends Joueur implements Strategy{
         carteIngredient.get(choix).afficher();
 
         int choix2 = strategy.choisirAction(this.idJoueur, nbjoueur, saison, carteIngredient.get(choix), champ);
-        System.out.println("Strategie choisi: " + choix2);
+        System.out.println("Action choisie: " + choix2);
         //-----------------Jouer Geant------------------------
             if(choix2==1){
                 carteIngredient.get(choix).jouerGeant(carteIngredient.get(choix).valeursGeant[saison], champ.get(this.getIdJoueur()-1));
